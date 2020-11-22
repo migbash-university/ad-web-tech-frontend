@@ -17,6 +17,12 @@
 	let password = '';
 	let errors = null;
 
+	if (process.env.NODE_ENV != 'production') {
+		console.log('=== DEV ENV ===')
+		password = 'miguel2000#'
+		email = 'miguelbacharov20@gmail.com'
+	}
+
 	async function submit(event) {
 		const response = await post(`auth/login`, { email, password });
 

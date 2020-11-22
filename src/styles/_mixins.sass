@@ -1,0 +1,76 @@
+// ----------------
+// Media Queries (Responsive Design)
+// ----------------
+
+@mixin for-size($size)
+
+  @if $size == phone-only
+    @media (max-width: 599px)
+      @content
+
+  @else if $size == tablet-portrait-up
+    @media (min-width: 600px)
+      @content
+
+  @else if $size == tablet-landscape-up
+    @media (min-width: 900px)
+      @content
+
+  @else if $size == desktop-up
+    @media (min-width: 1200px)
+      @content
+      
+  @else if $size == big-desktop-up
+    @media (min-width: 1800px) 
+      @content
+
+// ----------------
+// Button Default Styles
+// ----------------
+
+@mixin button_struct($bg_color, $txt_color)
+  @extend %font-btn
+  background-color: $bg_color
+  color: $txt_color
+  border: none
+  padding: 15px 35px
+  border-radius: 10px
+  text-decoration: none
+  transition-duration: 0.5s
+  display: inline-flex
+  justify-content: space-around
+  align-items: center
+  margin: 0 7.5px
+
+// ----------------
+//     FlexBox
+// ----------------
+
+@mixin flex-config($justify-content: false, $flex: false, $flex-direction: false, $align-items: false)
+  display: flex
+  
+  @if $justify-content != false
+    justify-content: $justify-content
+  
+  
+  @if $flex != false
+    flex: $flex
+  
+  
+  @if $flex-direction != false
+    flex-direction: $flex-direction
+  
+  
+  @if $align-items != false
+    align-items: $align-items
+
+// ---------------
+//      Font
+// ---------------
+
+@mixin font-config($family, $weight, $size)
+    font:
+        family: $family, sans-serif
+        style: normal
+        weight: $weight
+        size: $size

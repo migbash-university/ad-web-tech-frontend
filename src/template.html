@@ -8,7 +8,8 @@
 	%sapper.base%
 
 	<link rel='manifest' href='manifest.json'>
-	<link rel='icon' type='image/png' href='favicon.png'>
+	<link rel='icon' type="image/svg+xml" href='assets/svg/logo_main.svg'>
+	<link rel="stylesheet" href="global.css">
 
 	<!-- Import Ionicon icons & Google Fonts our Bootstrap theme relies on -->
 	<link href="//code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css">
@@ -17,12 +18,25 @@
 	<!-- Import the custom Bootstrap 4 theme from our hosted CDN -->
 	<link rel="stylesheet" href="//demo.productionready.io/main.css">
 
-	<style>
-		body {
-			/* prevent scrollbar popin */
-			min-height: 101vh;
-		}
-	</style>
+	<script type='text/javascript' src='http://d3js.org/d3.v3.min.js'></script>
+	<script type='text/javascript' src='http://d3js.org/topojson.v1.min.js'></script>
+	<script type='text/javascript' src='planetaryjs.min.js'></script>
+
+	<script src="https://typpo.github.io/spacekit/src/lib/three.r98.min.js"></script>
+	<script src="https://typpo.github.io/spacekit/src/lib/TrackballControls.js"></script>
+	<script src="https://typpo.github.io/spacekit/build/spacekit.js"></script>
+
+	<!-- Space Data for the Moon CDN Links-->
+	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r122/three.min.js" integrity="sha512-bzjaf85dHTL4H0BvkAJ/Jbvxqf1rDj+jVpCNe3oxQj/RXSnkx1HnKhqIcmMWghxEAbXsYgddrc38saWpltlkug==" crossorigin="anonymous"></script> -->
+	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/stats.js/r17/Stats.min.js" integrity="sha512-mfOs9z5Hk96xJH71l0ptzjgGvflNJRnHA7brsEwqDZf7mJa8QDfUtcHICKMXq4Ys80g5HKQMD9rsY3R44ZlEug==" crossorigin="anonymous"></script> -->
+	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/screenfull.js/5.0.2/screenfull.min.js" integrity="sha512-Xsp2RUVnPbF+7nqthvDZO1LGOqTHuR89rYGlbeHM0G76uiv5VwLLRs31tptp5/bzlKod7Zui1O3mjRX5jzYZ4Q==" crossorigin="anonymous"></script> -->
+	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.7/dat.gui.min.js" integrity="sha512-LF8ZB1iTwi4Qvkm4pekHG4a437Y9Af5ZuwbnW4GTbAWQeR2E4KW8WF+xH8b9psevV7wIlDMx1MH9YfPqgKhA/Q==" crossorigin="anonymous"></script> -->
+
+	<!-- <script type='text/javascript' src='../../client/src/routes/space_explorer/detector.min.js'></script>
+	<script type='text/javascript' src='../../client/src/routes/space_explorer/ellipse.js'></script>
+	<script type='text/javascript' src='../../client/src/routes/space_explorer/index.js'></script> -->
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/satellite.js/4.1.2/satellite.min.js" integrity="sha512-vPUNwJL2fh3Z31Gcd8AXpbctnJsfzU1+SlM3RWaYdmoIvQmFh15XS2unNjkUI5A9ZXD/fVjw2JGeOELEos5TKw==" crossorigin="anonymous"></script>
 
 	<!-- Sapper creates a <script> tag containing `app/client.js`
 	     and anything else it needs to hydrate the app and

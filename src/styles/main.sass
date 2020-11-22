@@ -1,0 +1,61 @@
+// -----------------------
+//  Define Fonts & Styles
+//  - Rubik Font
+// -----------------------
+
+@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap')
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap')
+@font-face
+    font-family: Azonix;
+    src: url("/fonts/Azonix-1VB0.otf") format("opentype");
+
+%font-btn
+    font:
+        family: 'Rubik', sans-serif
+        style: normal
+        weight: bold
+        size: 15px
+
+// -----------------------
+//     Define Game Stake Main Colors
+// -----------------------
+$light-v1: #ffffff
+$light-v2: #fafafa
+$light-v3: #FC1856
+$light-v4: #56CCF2
+$light-v5: #9B51E0
+$light-v6: #BB6BD9
+
+$dark-v1: #0B339F
+$dark-v2: #000000
+$dark-v3: #828282
+$dark-v4: #BDBDBD
+$dark-v5: #E0E0E0
+$dark-v6: #F2F2F2
+
+// -----------------------
+//    Import _partials
+// -----------------------
+@import "mixins"
+// @import "buttons"
+// @import "real_cash_icon"
+// @import "modal"
+
+// -----------------------
+//     Fonts Config
+// -----------------------
+    
+%font-popup-header
+    @include font-config(Lato, bolder, 30px)
+
+%font-section-title
+    @include font-config(Rubik, bold, 50px)
+
+%font-section-text
+    @include font-config(Lato, medium, 18px)
+
+%font-popup-question
+    @include font-config(Lato, bold, 17px)
+
+%font-popup-answer
+    @include font-config(Lato, normal, 17px)
