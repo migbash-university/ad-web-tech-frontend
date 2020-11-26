@@ -1,6 +1,8 @@
 <script>
     // import {launch_data} from '../../stores/dummy_launch_data';
+    
     import { fade } from 'svelte/transition';
+
     import { streamVisible } from '../../stores/stream.js';
     import { notif } from '../../stores/notification.js';
 
@@ -37,27 +39,36 @@
 
 </script>
 
-<!-- Component HTML -->
-<div class='card-cont' on:click={expandInfo}>
+<!-- 
+    COMPONENT HTML 
+-->
+<div in:fade out:fade class='card-cont' on:click={expandInfo}>
+
     <div class="mission_date">
-        <h1> {unixToDay(launch_time_unix)} </h1>
-        <h1 class='month'> {unixToMonth(launch_time_unix)} </h1>
+        <h3> {unixToDay(launch_time_unix)} </h3>
+        <h6 class='month'> {unixToMonth(launch_time_unix)} </h6>
     </div>
+
     <div class='mission_desc'>
-        <h2> {mission_title} </h2>
+        <h4> {mission_title} </h4>
         <span>
-            <h3> {company} </h3>
-            <h3> {launch_site} </h3>
+            <h6> {company} </h6>
+            <h6> {launch_site} </h6>
         </span>
         <p> {mission_desc} </p>
+        <span on:click={streamVisible.visible(live_stream)}>
+            <p> Stream </p>
+            <img src="./assets/svg/_launch_card/stream_feed_icon.svg" alt="stream-video-icon" />
+        </span>
         <!-- Expanded Info on Click-->
-        {#if expand}
-            <div in:fade out:fade>
+        <!-- {#if expand}
+            <div class='extra-links' in:fade out:fade>
                 <p> Social Media Stuf </p>
                 <p on:click={streamVisible.visible(live_stream)}> View Livestream </p>
             </div>
-        {/if}
+        {/if} -->
     </div>
+
     {#if live}
         <!-- Live Launch Status Icon-->
         <img style='position: absolute; right: 0; width 17px; height: 17px; right: 10px; top: 10px;' src="./assets/gif/red-point-gif.gif" alt="red-point-gif" />
@@ -67,30 +78,24 @@
     {/if}
 </div>
 
-<!-- Component SASS (CSS) -->
+<!-- 
+    Component SASS (CSS) 
+-->
 <style lang='sass'>
 
     @import '../../styles/main.sass'
+
+    h4
+        color: #000000
 
     span
         display: flex
         justify-content: start
 
-        h3
+        h6
             margin: 5px
+            color: #8D8D8D
 
-    h2
-        font:
-            family: Azonix
-            size: 15px
-        color: black
-
-    h3
-        color: #8D8D8D
-        font:
-            family: Azonix
-            size: 10px
-    
     .card-cont
         @include flex-config($align-items: center, $justify-content: start)
         background: 
@@ -104,7 +109,10 @@
         margin: 10px 0
         overflow: hidden
         position: relative
+        cursor: pointer
 
+    // MISSION INFO
+        
     .mission_date
         background: 
             color: #464646
@@ -122,12 +130,7 @@
         grid-column: 2 / 5
         padding: 20px
 
-        p
-            margin: 0
-            font-size: 10px
-
     .month
-        font-size: 10px
         color: #7C7C7C
 
 </style>

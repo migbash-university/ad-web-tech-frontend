@@ -1,3 +1,73 @@
-body {
+html, body {
     background-color: black !important;
+    margin: 0 0;
+    padding: 0 0;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+/* 
+Global Fonts for Website 
+*/
+
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500&display=swap');
+
+@font-face {
+    font-family: Azonix;
+    src: url("/fonts/Azonix-1VB0.otf") format("opentype");
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: Azonix;
+    color: white;
+    letter-spacing: 3.7px;
+    margin: 0;
+}
+
+/* 
+---------------
+Headings Global
+---------------
+h1 -> 2em/32 px
+h2 -> 1.5em/24 px
+h3 -> 1.17em/18.72 px
+h4 -> 1em/16 px
+h5 -> .83em/13.28 px
+h6 -> .67em/10.72 px
+*/
+
+button {
+    font-family: Azonix;
+    outline: none;
+    border: none;
+    transition: all 0.5s ease;
+    cursor: pointer;
+    /* Button Style */
+    align-items: center;
+    border-radius: 5px;
+    font-size: 16px;
+    padding: 15px;
+}
+
+input {
+    width: 100%;
+    border-radius: 5px;
+    border: 0;
+    font-size: 20px;
+    outline: none;
+    padding: 10px;
+}
+                
+
+p {
+    font-size: 10px;
+    font-family: Ubuntu, sans-serif; 
+}
+
+a {
+    text-decoration: none;
+    cursor: pointer;
+    color: white;
 }

@@ -18,24 +18,29 @@
     }
 </script>
 
-<!-- Component HTML -->
-<div in:fade out:fade class="modal-wrapper"></div>
+<!-- 
+    Exit Option from pop-up window 
+-->
+<svelte:window on:keydown={e => { if (e.key == 27) { notif.reset }}} />
 
-<div class='modal_frame' in:fade out:fade >
+<!-- Component HTML -->
+<div in:fade out:fade class="modal-wrapper" on:click={notif.reset}></div>
+
+<div class='modal_frame' in:fade out:fade>
     <!-- close btn -->
-    <img on:click={notif.reset} src="./assets/svg/_stream-vid/close_btn.svg" alt="close-btn" />
+    <img id='close-btn' on:click={notif.reset} src="./assets/svg/_stream-vid/close_btn.svg" alt="close-btn" />
     <h3> Notify me via </h3>
     <div class="select_menu">
         <span>
-            <img on:click={() => notifOption(1)} src="./assets/svg/_notif/Email_Vector.svg" alt="email-icon" />
+            <img class='notif-select' on:click={() => notifOption(1)} src="./assets/svg/_notif/Email_Vector.svg" alt="email-icon" />
             <p> Email </p>
         </span>
         <span>
-            <img on:click={() => notifOption(2)} src="./assets/svg/_notif/Notifications_Vector.svg" alt="browser-icon" />
+            <img class='notif-select' on:click={() => notifOption(2)} src="./assets/svg/_notif/Notifications_Vector.svg" alt="browser-icon" />
             <p> Browser </p>
         </span>
         <span>
-            <img on:click={() => notifOption(3)} src="./assets/svg/_notif/Phone-Icon.svg" alt="mobile-icon" />
+            <img class='notif-select' on:click={() => notifOption(3)} src="./assets/svg/_notif/Phone-Icon.svg" alt="mobile-icon" />
             <p> Mobile </p>
         </span>
     </div>
@@ -49,6 +54,21 @@
 <style lang='sass'>
 
     @import '../../styles/main.sass'
+
+    .close-btn
+        position: absolute
+        right: 5%
+        top: 5%
+
+    .notif-select
+        padding: 50px
+        border-radius: 10px
+        background-color: #313131
+
+        &:hover
+            background-color: white
+            transition: all 3s ease
+            box-shadow: 1px 1px 1px white
 
     .modal_frame
         position: fixed
@@ -84,16 +104,6 @@
         width: 100vw
         height: 100vh
         background-color: rgba(0, 0, 0, 0.6)
-
-    img
-        padding: 50px
-        border-radius: 10px
-        background-color: #313131
-
-        &:hover
-            background-color: white
-            transition: all 3s ease
-            box-shadow: 1px 1px 1px white
 
     span
         @include flex-config($align-items: center, $justify-content: center, $flex-direction: column)

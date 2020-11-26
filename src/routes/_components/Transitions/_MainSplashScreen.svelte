@@ -1,7 +1,7 @@
 <script>
+    import { fade, fly } from 'svelte/transition';
 
     import { onMount } from 'svelte';
-    import { fade } from 'svelte/transition';
 
     let show = true;
 
@@ -15,7 +15,7 @@
 
 <!-- Component HTML -->
 {#if show}
-    <div class='container'>
+    <div in:fade out:fade>
         <img src='./assets/svg/Splash_Img.svg' alt='Splash_Img' />
     </div>
 {/if}
@@ -28,7 +28,7 @@
 
     @import '../../../styles/main.sass'
 
-    .container
+    div
         @include flex-config($align-items: center, $justify-content: center)
         position: fixed
         background-color: black

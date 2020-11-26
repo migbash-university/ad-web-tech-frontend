@@ -1,27 +1,19 @@
-<script context="module">
-	export async function preload({ params }) {
-        // const { slug } = params;
-        // const news = news_data[slug];
-        // const { article } = await api.get(`articles/${params.slug}`, null);
-        // Your License Key is XGJFPA-WUQ254-VFTFK6-4LG0
-
-        // const response = await fetch('https://api.n2yo.com/rest/v1/satellite//tle/{id}&apiKey={XGJFPA-WUQ254-VFTFK6-4LG0}')
-        // return await response.json()
-	}
-</script>
-
 <script>
     import { onMount } from "svelte"
 
-    import { satellite_data } from '../../stores/_satellite_data.js'
-    import { nasaDataTLE } from '../../stores/_nasa_tle_data.js'
+    import { fade } from 'svelte/transition';
+
+    // DUMMY DATA
+    import {satellite_data} from '../../stores/_satellite_data.js'
+    import {nasaDataTLE} from '../../stores/_data_nasa_tle.js'
+    import {earth_markers} from '../../stores/_data_earth_markers.js'
 
     let date = new Date();
 	$: hour = date.getHours();
 	$: min = date.getMinutes();
     $: sec = date.getSeconds();
     $: day = date.getDate();
-    $: month = monthNames[date.getDate()]
+    $: month = monthNames[date.getMonth()]
     $: year = date.getFullYear();
     let dayOrNight = 'AM';
     
@@ -33,19 +25,28 @@
 			date = new Date();
 			dayOrNight = (hour >= 12) ? "PM" : "AM";
 		}, 1000);
-	});
+    });
     
-    // Reference to the outside
+    let earthPinsView = false;
+
+    // ~~~~~~~~~~~~~~
+    // SPACEKIT-JS VISUALS DEF
+    // ~~~~~~~~~~~~~~
+
     let viz, n;
 
     onMount(async () => {
+        recreateSimulation();
+    });
+
+    const recreateSimulation = () => {
         // Create the visualization and put it in our div.
         viz = new Spacekit.Simulation(document.getElementById('main-container'), {
             basePath: 'https://typpo.github.io/spacekit/src',
             jdPerSecond: 1
         });
         viz.createStars();
-    });
+    }
 
     let earth;
     let sat_obj = []
@@ -91,6 +92,9 @@
                 // Store data in a spearate sat_obj
                 sat_obj[val] = spaceship
                 spaceship.orbitAround(earth);
+                // sat_obj[val].addEventListener('mouseover', function() {
+                //     alert('mouseover!')
+                // })
             }
         } else {
             for (n in sat_obj) {
@@ -126,16 +130,219 @@
         const uranus =  viz.createObject('uranus', Spacekit.SpaceObjectPresets.URANUS);
         const neptune =  viz.createObject('neptune', Spacekit.SpaceObjectPresets.NEPTUNE);
 
-        all_obj.push([sun, mercury, venus, earth, mars, jupiter, saturn, uranus, neptune])
+        all_obj.push(sun, mercury, venus, earth, mars, jupiter, saturn, uranus, neptune)
     }
 
     const clearSimulation = () => {
         for (n in all_obj) {
             viz.removeObject(all_obj[n])
         }
+
+        // Make sure that the other simulation is hidden:
+        if (earthPinsView != false) {
+            earthPinsView = false
+            setTimeout(() => {
+                recreateSimulation()
+            }, 2000)
+        }
     }
 
     const filterSatellites = () => {
+    }
+
+    // ~~~~~~~~~~~
+    // Interactive Earth Simulation
+    // WITH PINS
+    // ~~~~~~~~~~~
+
+    // PLANET VISUAL & INTERACTION
+
+    let objects = [], marker_data = [];
+    let selectedMarker, info;
+
+    let showInfo = false
+
+    const showInfoFn = () => {
+        showInfo = true
+        setTimeout(function() {
+        showInfo = false;
+        }, 10000)
+    }
+
+    const getMarkerData = (uuid) => {
+        console.log('Checking for markers data')
+        marker_data.forEach(elem => {
+        console.log(elem.marker.uuid + ' ' + uuid)
+        if (elem.marker.uuid == uuid) {
+            // console.log('+++++++++++++++++++ Marker Found! ++++++++++++++++++++++')
+            showInfoFn()
+            info = elem.data
+        }
+        });
+    }
+
+    // THREE.JS ROTATING GLOBE CONFIG & SETUP
+    // EARTH WITH PINS
+
+    const toggleEarthPins = () => {
+        earthPinsView = true
+        setTimeout(() => {
+            renderEarthWithPins()
+        }, 4000)
+    }
+
+    const renderEarthWithPins = () => {
+
+        // ~~~~~~~ 
+        // Marker Object Code 
+        // ~~~~~~~
+
+        function Marker() {
+            THREE.Object3D.call(this);
+            var radius = 0.005;
+            var sphereRadius = 0.02;
+            var height = 0.05;
+            var material = new THREE.MeshPhongMaterial({ color: 0xbab68f });
+            var cone = new THREE.Mesh(new THREE.ConeBufferGeometry(radius, height, 8, 1, true), material);
+            cone.position.y = height * 0.5;
+            cone.rotation.x = Math.PI;
+            var sphere = new THREE.Mesh(new THREE.SphereBufferGeometry(sphereRadius, 16, 8), material);
+            sphere.position.y = height * 0.95 + sphereRadius;
+            this.add(cone, sphere);
+            // scene.add(sphere) // Adding marker for easier identification
+            // scene.add(cone) // Adding marker for easier identification
+        }
+
+        Marker.prototype = Object.create(THREE.Object3D.prototype);
+
+        // ~~~~~~~ 
+        // Earth Object 
+        // ~~~~~~~
+
+        function Earth(radius) {
+            THREE.Object3D.call(this);
+            this.userData.radius = radius;
+            var earth = new THREE.Mesh(
+                new THREE.SphereBufferGeometry(radius, 64.0, 48.0),
+                new THREE.MeshPhongMaterial({
+                    map: THREE.ImageUtils.loadTexture('/assets/img/world_map_color.png'),
+                })
+            );
+            this.add(earth);
+        }
+
+        Earth.prototype = Object.create(THREE.Object3D.prototype);
+
+        Earth.prototype.createMarker = function (lat, lon, data) {
+            var marker = new Marker();
+            var latRad = lat * (Math.PI / 180);
+            var lonRad = -lon * (Math.PI / 180);
+            var r = this.userData.radius;
+            marker.position.set(Math.cos(latRad) * Math.cos(lonRad) * r, Math.sin(latRad) * r, Math.cos(latRad) * Math.sin(lonRad) * r);
+            marker.rotation.set(0.0, -lonRad, latRad - Math.PI * 0.5);
+            this.add(marker);
+            console.log(marker)
+            scene.add(marker) // Adding marker for easier identification
+            objects.push(marker);
+            marker_data.push({
+            marker: marker,
+            data: data
+            })
+        };
+
+        // ~~~~~~~ 
+        // Three.js code 
+        // ~~~~~~~
+
+        const raycaster = new THREE.Raycaster();
+        const mouse = new THREE.Vector2();
+
+        var scene, camera, renderer;
+        var controls;
+
+        init();
+
+        function init() {
+            scene = new THREE.Scene();
+
+            camera = new THREE.PerspectiveCamera(45, 4 / 3, 0.1, 100);
+            camera.position.set(0.0, 1.5, 3.0);
+
+            // Select the canvas from the document
+            var canvReference = document.getElementById('rotatingGlobe');
+
+            renderer = new THREE.WebGLRenderer({ 
+                antialias: true,
+                canvas: canvReference
+            });
+
+            controls = new THREE.OrbitControls(camera, renderer.domElement);
+            controls.autoRotate = true;
+            controls.autoRotateSpeed = -1.0;
+            controls.enablePan = false;
+
+            var ambient = new THREE.AmbientLight(0xffffff, 0.5);
+            scene.add(ambient);
+
+            var direcitonal = new THREE.DirectionalLight(0xffffff, 0.5);
+            direcitonal.position.set(5.0, 2.0, 5.0).normalize();
+            scene.add(direcitonal);
+
+            animate()
+
+            var earth = new Earth(0.5);
+
+            // POPULATE EARTH MODEL WITH LAUNCH SITES =====
+            for (var i in earth_markers) {
+                var item = earth_markers[i]
+                earth.createMarker(item['coord'][0], item['coord'][1], earth_markers[i]['info'])
+            }
+            // END OF POPULATE
+
+            scene.add(earth);
+
+            window.addEventListener('resize', onResize);
+            onResize();
+
+            canvReference.addEventListener('mousemove', onMouseMove, false);
+            window.requestAnimationFrame(render);
+        }
+
+        function onMouseMove(event) {
+            // calculate mouse position in normalized device coordinates (-1 to +1) for both components
+            mouse.x = ( event.offsetX / window.innerWidth ) * 2 - 1;          // Adjusted to the canvas only (event.offsetX)
+            mouse.y = - ( event.offsetY / window.innerHeight ) * 2 + 1;       // Adjusted to the canvas only (event.offsetY)
+        }
+
+        function onResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;     // controls the camera view position and aspect ratio
+            camera.updateProjectionMatrix();                            // updates the "porjector" matrix
+            renderer.setSize(window.innerWidth, window.innerHeight);    // size of the render canvas
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            render()
+            controls.update();
+        }
+
+        function render() {
+            // update the picking ray with the camera and mouse position
+            raycaster.setFromCamera(mouse, camera);
+            // console.log(scene.children) // ERROR !!!
+            // calculate objects intersecting the picking ray
+            const intersects = raycaster.intersectObjects( objects, true );
+
+            for (let i = 0; i < intersects.length; i ++) {
+                // alert('Got to here!')
+                // console.log(intersects[i].object.uuid)
+                selectedMarker = intersects[i].object.parent.uuid
+                getMarkerData(selectedMarker)
+                intersects[ i ].object.material.color.set(0xff0000);
+            }
+
+            renderer.render(scene, camera); // RE-RENDER THE CANVAS
+        }
     }
 
 </script>
@@ -144,24 +351,48 @@
 <div id='outer-container'> 
 
     <!-- Canvas For Galaxy -->
-    <div id='main-container'></div>
+    {#if earthPinsView == false}
+         <!-- content here -->
+        <div in:fade out:fade id='main-container'></div>
+    {/if}
+    
+    <!-- Canvas for Interactive EARTH with PIN View -->
+    {#if earthPinsView}
+        <div in:fade out:fade id='canvas_cont'>
+            <!-- VISUAL GLOBE 3D - CANVAS -->
+            <canvas id='rotatingGlobe'> </canvas>
+            <!-- PIN INFO -->
+            {#if showInfo}
+                <div in:fade out:fade id='pin-info-wrapper'>
+                    <div id='pin-info-inner'>
+                        <h6 style='color: white;'> {info.name} </h6>
+                        <img style="width: 75px; height: 75px;" src={info.logo} alt="logo-launch-site" />
+                    </div>
+                </div> 
+            {/if}
+        </div>
+    {/if}
 
     <!-- Local Time Display -->
     <div id='time_cont'>
-      <p> Local Time </p>
-      <p> {hour}:{min}:{sec} {dayOrNight} </p>
-      <p> {day} {month} {year} </p>
+        <h6 style='color: #828282;'> Local Time </h6>
+        <h6> {hour}:{min}:{sec} {dayOrNight} </h6>
+        <h6> {day} {month} {year} </h6>
     </div>
 
     <!-- Back Home Button Page Redirect -->
     <a rel=prefetch sapper:noscroll href='/'>
-      <button id='explorer_btn'> EVENTS Tracker <img src="./assets/svg/NextArrow_Vector.svg" alt="next-arrow-vector"/> </button>
+        <span>
+            <img id='back_btn' src="./assets/svg/_space_exp/_home_btn.svg" alt="next-arrow-vector"/>
+            <p> Back Home </p>
+        </span>
     </a>
 
-    <!-- Galaxay Search Options Menu -->
+    <!-- Galaxay Search Engine Search Options Menu -->
     <div id='btn-menu'>
         <button on:click={toggleEarthSat}> Show Satellites </button>
         <button on:click={toggleEarth}> Earth </button>
+        <button on:click={toggleEarthPins}> View Launch Sites </button>
         <button on:click={toggleMoon}> Moon </button>
         <button on:click={toggleGalaxy}> Solar System </button>
         <button> Missions </button>
@@ -171,8 +402,11 @@
 <!-- Component SASS (CSS) -->
 
 <style>
+
     #outer-container {
         position: relative;
+        height: 100vh;
+        width: 100vw;
     }
 
 	#main-container {
@@ -182,7 +416,7 @@
     #time_cont {
         position: absolute;
         margin: auto;
-        top: 0;
+        top: 5%;
         right: 0;
         left: 0;
         text-align: center;
@@ -191,12 +425,10 @@
         color: white;
     }
 
-    #explorer_btn {
-        background-color: white;
-        border-radius: 10px;
+    #back_btn {
         position: absolute;
-        bottom: 50px;
-        left: 50px;
+        top: 5%;
+        left: 2.5%;
     }
 
     #btn-menu {
@@ -206,6 +438,21 @@
         right: 0;
         margin: auto;
         text-align: center;
+    }
+
+    #pin-info-wrapper {
+        position: absolute;
+        top: 50px;
+        right: 50px;
+        border-radius: 10px;
+        background: linear-gradient(to bottom, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.5));
+        padding: 1px;
+    }
+
+    #pin-info-inner {
+        background-color: black;
+        padding: 25px;
+        border-radius: 10px;
     }
     
 </style>

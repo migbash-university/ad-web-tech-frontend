@@ -7,9 +7,13 @@
 	export let segment;
 </script>
 
-<!-- Component HTML -->
+<!-- 
+Component HTML 
+-->
 
-<Nav {segment} />
+{#if segment != 'space_explorer'}
+	<Nav {segment} />
+{/if}
 
 <main>
 	<MainTransition>
@@ -17,9 +21,14 @@
 	</MainTransition>
 </main>
 
-<Footer {segment} />
+{#if segment != 'space_explorer'}
+	<Footer {segment} />
+{/if}
 
-<!-- Component SASS (CSS) -->
+
+<!-- 
+Component SASS (CSS)
+-->
 
 <style lang='sass'>
 

@@ -3,8 +3,14 @@
     import { streamVisible } from '../../stores/stream.js';
 </script>
 
+<!-- 
+    Exit Option from pop-up window 
+-->
+
+<svelte:window on:keydown={e => { if (e.key == 27) { streamVisible.reset }}} />
+
 <!-- Component HTML -->
-<div in:fade out:fade class="modal-wrapper"></div>
+<div in:fade out:fade on:click={streamVisible.reset} class="modal-wrapper"></div>
 
 <div in:fade out:fade>
     <!-- close btn -->
@@ -23,11 +29,10 @@
         left: 0
         margin: auto
         z-index: 2001
-
         background-color: white
         box-shadow: 0 0 4px #cccccc
-        width: 35vw
-        height: 45vh
+        width: 65vw
+        height: 65vh
         border-radius: 10px
         overflow-y: hidden
 
@@ -39,7 +44,7 @@
 
         width: 100vw
         height: 100vh
-        background-color: rgba(0, 0, 0, 0.6)
+        background-color: rgba(0, 0, 0, 0.9)
 
     img
         position: absolute

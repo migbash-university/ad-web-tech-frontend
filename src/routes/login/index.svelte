@@ -37,32 +37,55 @@
 </script>
 
 <svelte:head>
-	<title>Sign in • Conduit</title>
+	<title>Sign in • AdavaSpace</title>
 </svelte:head>
 
+<!-- 
+	COMPONENT HTML 
+-->
+
 <div class="auth-page">
-	<div class="container page">
-		<div class="row">
-			<div class="col-md-6 offset-md-3 col-xs-12">
-				<h1 class="text-xs-center">Sign In</h1>
-				<p class="text-xs-center">
-					<a href="/register">Need an account?</a>
-				</p>
+	<div class='innerDiv'>
+		<h1 class="text-xs-center">Sign In</h1>
+		<p class="text-xs-center">
+			<a href="/register">Need an account?</a>
+		</p>
 
-				<ListErrors {errors}/>
+		<ListErrors {errors}/>
 
-				<form on:submit|preventDefault={submit}>
-					<fieldset class="form-group">
-						<input class="form-control form-control-lg" type="email" required placeholder="Email" bind:value={email}>
-					</fieldset>
-					<fieldset class="form-group">
-						<input class="form-control form-control-lg" type="password" required placeholder="Password" bind:value={password}>
-					</fieldset>
-					<button class="btn btn-lg btn-primary pull-xs-right" type="submit">
-						Sign in
-					</button>
-				</form>
-			</div>
-		</div>
+		<form on:submit|preventDefault={submit}>
+			<fieldset class="form-group">
+				<input class="form-control form-control-lg" type="email" required placeholder="Email" bind:value={email}>
+			</fieldset>
+			<fieldset class="form-group">
+				<input class="form-control form-control-lg" type="password" required placeholder="Password" bind:value={password}>
+			</fieldset>
+			<button class="btn btn-lg btn-primary pull-xs-right" type="submit">
+				Sign in
+			</button>
+		</form>
 	</div>
 </div>
+
+<!-- 
+	COMPONENT STYLE 
+-->
+
+<style>
+
+	.auth-page {
+		margin: auto;
+		height: 100vh;
+		width: 50%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.innerDiv {
+		height: 35%;
+    	display: grid;
+    	align-items: center;
+	}
+	
+</style>

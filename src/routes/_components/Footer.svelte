@@ -4,7 +4,7 @@
 
 <!-- Component HTML -->
 
-<footer class='container-fluid'>
+<div class='container-fluid'>
 
     <!-- Footer Logo Company -->
     <img src='./assets/svg/Footer_Img.svg' alt='company_logo_footer' />
@@ -18,7 +18,7 @@
         <a rel=prefetch sapper:noscroll aria-current='{segment === 'explorer' ? 'explorer' : undefined}' href='/explorer'> Explorer </a>
     </div>
 
-</footer>
+</div>
 
 <!-- Component SASS (CSS) -->
 
@@ -26,12 +26,13 @@
     
     @import '../../styles/main.sass'
 
-    footer
+    div
         @include flex-config($align-items: center, $justify-content: start)
         padding: 35px
         justify-content: space-between
         background: 
             color: #161616
+            
     a
         text-decoration: none
         color: #6B6B6B

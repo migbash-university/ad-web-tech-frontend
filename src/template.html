@@ -11,33 +11,43 @@
 	<link rel='icon' type="image/svg+xml" href='assets/svg/logo_main.svg'>
 	<link rel="stylesheet" href="global.css">
 
+	<!-- SVELTE/SAPPER CDN's -->
 	<!-- Import Ionicon icons & Google Fonts our Bootstrap theme relies on -->
-	<link href="//code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css">
-	<link href="//fonts.googleapis.com/css?family=Titillium+Web:700|Source+Serif+Pro:400,700|Merriweather+Sans:400,700|Source+Sans+Pro:400,300,600,700,300italic,400italic,600italic,700italic"
-	 rel="stylesheet" type="text/css">
+	<!-- <link href="//code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css"> -->
+	<!-- <link href="//fonts.googleapis.com/css?family=Titillium+Web:700|Source+Serif+Pro:400,700|Merriweather+Sans:400,700|Source+Sans+Pro:400,300,600,700,300italic,400italic,600italic,700italic"
+	 rel="stylesheet" type="text/css"> -->
 	<!-- Import the custom Bootstrap 4 theme from our hosted CDN -->
-	<link rel="stylesheet" href="//demo.productionready.io/main.css">
+	<!-- <link rel="stylesheet" href="//demo.productionready.io/main.css"> -->
+	
+	<!-- BOOTSTRAP -->
+	<!-- CSS -->
+	<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous"> -->
+	<!-- jQuery and JS bundle w/ Popper.js -->
+	<!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script> -->
+	<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script> -->
 
-	<script type='text/javascript' src='http://d3js.org/d3.v3.min.js'></script>
+	<!-- PLANETERY JS CDN's -->
+	<!-- <script type='text/javascript' src='http://d3js.org/d3.v3.min.js'></script>
 	<script type='text/javascript' src='http://d3js.org/topojson.v1.min.js'></script>
-	<script type='text/javascript' src='planetaryjs.min.js'></script>
+	<script type='text/javascript' src='planetaryjs.min.js'></script> -->
 
-	<script src="https://typpo.github.io/spacekit/src/lib/three.r98.min.js"></script>
-	<script src="https://typpo.github.io/spacekit/src/lib/TrackballControls.js"></script>
+	<!-- SPACEKIT JS CDN's -->
 	<script src="https://typpo.github.io/spacekit/build/spacekit.js"></script>
+	<!-- DO NOT WORK - 404 ERROR -->
+	<!-- <script src="https://typpo.github.io/spacekit/src/lib/three.r98.min.js"></script> -->
+	<!-- <script src="https://typpo.github.io/spacekit/src/lib/TrackballControls.js"></script> -->
 
-	<!-- Space Data for the Moon CDN Links-->
-	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r122/three.min.js" integrity="sha512-bzjaf85dHTL4H0BvkAJ/Jbvxqf1rDj+jVpCNe3oxQj/RXSnkx1HnKhqIcmMWghxEAbXsYgddrc38saWpltlkug==" crossorigin="anonymous"></script> -->
-	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/stats.js/r17/Stats.min.js" integrity="sha512-mfOs9z5Hk96xJH71l0ptzjgGvflNJRnHA7brsEwqDZf7mJa8QDfUtcHICKMXq4Ys80g5HKQMD9rsY3R44ZlEug==" crossorigin="anonymous"></script> -->
-	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/screenfull.js/5.0.2/screenfull.min.js" integrity="sha512-Xsp2RUVnPbF+7nqthvDZO1LGOqTHuR89rYGlbeHM0G76uiv5VwLLRs31tptp5/bzlKod7Zui1O3mjRX5jzYZ4Q==" crossorigin="anonymous"></script> -->
-	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.7/dat.gui.min.js" integrity="sha512-LF8ZB1iTwi4Qvkm4pekHG4a437Y9Af5ZuwbnW4GTbAWQeR2E4KW8WF+xH8b9psevV7wIlDMx1MH9YfPqgKhA/Q==" crossorigin="anonymous"></script> -->
-
-	<!-- <script type='text/javascript' src='../../client/src/routes/space_explorer/detector.min.js'></script>
-	<script type='text/javascript' src='../../client/src/routes/space_explorer/ellipse.js'></script>
-	<script type='text/javascript' src='../../client/src/routes/space_explorer/index.js'></script> -->
-
+	<!-- SATELLITES JS FOR CALCULATING TLN VALUES -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/satellite.js/4.1.2/satellite.min.js" integrity="sha512-vPUNwJL2fh3Z31Gcd8AXpbctnJsfzU1+SlM3RWaYdmoIvQmFh15XS2unNjkUI5A9ZXD/fVjw2JGeOELEos5TKw==" crossorigin="anonymous"></script>
 
+	<!-- OTHER CDN's -->
+	<!-- ISSUE WITH THE THREE JS LIBRARY R122 -->
+	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r122/three.min.js" integrity="sha512-bzjaf85dHTL4H0BvkAJ/Jbvxqf1rDj+jVpCNe3oxQj/RXSnkx1HnKhqIcmMWghxEAbXsYgddrc38saWpltlkug==" crossorigin="anonymous"></script> -->
+	<!-- <script src="https://threejs.org/examples/js/controls/OrbitControls.js"></script> -->
+	<script src="https://threejs.org/build/three.js"></script>
+	<script src="https://threejs.org/examples/js/controls/OrbitControls.js"></script>
+	<!-- <script src="https://s3-eu-west-2.amazonaws.com/bckld/lab/loading.js"></script> -->
+	
 	<!-- Sapper creates a <script> tag containing `app/client.js`
 	     and anything else it needs to hydrate the app and
 	     initialise the router -->
