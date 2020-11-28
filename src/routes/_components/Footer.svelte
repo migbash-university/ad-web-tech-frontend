@@ -4,7 +4,7 @@
 
 <!-- Component HTML -->
 
-<div class='container-fluid'>
+<div>
 
     <!-- Footer Logo Company -->
     <img src='./assets/svg/Footer_Img.svg' alt='company_logo_footer' />
@@ -46,6 +46,6 @@
             transition: all 0.5s ease
 
         [aria-current]
-            color: white
+            color: #FFA800
 
 </style>

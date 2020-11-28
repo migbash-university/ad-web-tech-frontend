@@ -12,7 +12,9 @@
     
     async function submitEmail() {
         const response = await post_non_auth('http://127.168.1.0:8080/news_sub', { email });
-        console.log(response)
+        if (process.env.NODE_ENV != 'production') {
+            console.log(response)
+	    }
         // TODO handle network errors
         // errors = response.errors;
 		if (response.ok) {
