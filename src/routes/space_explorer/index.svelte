@@ -3,10 +3,12 @@
 
     import { fade } from 'svelte/transition';
 
-    // DUMMY DATA
+    // DUMMY DATA;
     import {satellite_data} from '../../stores/_satellite_data.js'
     import {nasaDataTLE} from '../../stores/_data_nasa_tle.js'
     import {earth_markers} from '../../stores/_data_earth_markers.js'
+
+    // REAL DATA;
 
     let date = new Date();
 	$: hour = date.getHours();
@@ -74,8 +76,18 @@
                 var tleLine1 = nasaDataTLE[0].member[val].line1,
                 tleLine2 = nasaDataTLE[0].member[val].line2
 
-                // Initialize a satellite record
+                // Initialize a satellite record CDN
                 var satrec = satellite.twoline2satrec(tleLine1, tleLine2);
+                
+                // ~~~~~~~
+                // a : 
+                // e : eccentricity,
+                // i : inclination,
+                // w :
+                // ma : mean orbit value,
+                // n : number orbit,
+                // epoch : value in jd OR normal epoch,
+                // ~~~~~~~
 
                 var spaceship = viz.createObject(nasaDataTLE[0].member[val].name, {
                     labelText: nasaDataTLE[0].member[val].name,
@@ -89,9 +101,10 @@
                         n: satrec.no,
                         epoch: satrec.jdsatepoch }, 'rad'),
                 });
-                // Store data in a spearate sat_obj
-                sat_obj[val] = spaceship
+                sat_obj[val] = spaceship // Store data in a spearate sat_obj array;
                 spaceship.orbitAround(earth);
+
+                // TODO: Apply Click trigger on to the sattelite for determinig the satellite;
                 // sat_obj[val].addEventListener('mouseover', function() {
                 //     alert('mouseover!')
                 // })
@@ -117,6 +130,15 @@
         all_obj.push(moon)
     }
 
+    const toggleMars = () => {
+    }
+
+    const toggleJupiter = () => {
+    }
+
+    const toggleNeptune = () => {
+    }
+
     const toggleGalaxy = () => {
         clearSimulation()
 
@@ -133,6 +155,10 @@
         all_obj.push(sun, mercury, venus, earth, mars, jupiter, saturn, uranus, neptune)
     }
 
+    /**
+     * clear off the current interactive SpaceKitJs Simulation of off the
+     * planets visualized and their images, ready for the next visualizations,
+     */
     const clearSimulation = () => {
         for (n in all_obj) {
             viz.removeObject(all_obj[n])
@@ -147,12 +173,19 @@
         }
     }
 
+    /**
+     * Functon - Allows for the filtering of the EARTH Orbiting Satellites based on data,
+     * launch-date, operational, purpose, etc...
+     */
     const filterSatellites = () => {
     }
 
     // ~~~~~~~~~~~
     // Interactive Earth Simulation
-    // WITH PINS
+    // WITH PINS FOR VISUAL LAUNCH PADS ACROSS THE EARTH
+    // 
+    // THREE.JS ROTATING GLOBE CONFIG & SETUP
+    // EARTH WITH PINS
     // ~~~~~~~~~~~
 
     // PLANET VISUAL & INTERACTION
@@ -162,6 +195,10 @@
 
     let showInfo = false
 
+    /**
+     * Logical triggers (+ TimeOut) for layout update,
+     * and data visualization for indiviual pins
+     */
     const showInfoFn = () => {
         showInfo = true
         setTimeout(function() {
@@ -169,6 +206,11 @@
         }, 10000)
     }
 
+    /**
+     * Match the 'hovered' pin, with the data stored in a temp array,
+     * and set the new 'info' to that of the 'hovered' pin, 
+     * @param uuid
+     */
     const getMarkerData = (uuid) => {
         console.log('Checking for markers data')
         marker_data.forEach(elem => {
@@ -181,9 +223,10 @@
         });
     }
 
-    // THREE.JS ROTATING GLOBE CONFIG & SETUP
-    // EARTH WITH PINS
-
+    /**
+     * Function to trigger the Earth with Pins with delay to allow for proper
+     * component rendering and loading,
+     */
     const toggleEarthPins = () => {
         earthPinsView = true
         setTimeout(() => {
@@ -191,11 +234,11 @@
         }, 4000)
     }
 
+    /**
+     * Render the Interactive THREE.JS Earth with the PINS,
+     * and their interactivity,
+     */
     const renderEarthWithPins = () => {
-
-        // ~~~~~~~ 
-        // Marker Object Code 
-        // ~~~~~~~
 
         function Marker() {
             THREE.Object3D.call(this);
@@ -214,10 +257,6 @@
         }
 
         Marker.prototype = Object.create(THREE.Object3D.prototype);
-
-        // ~~~~~~~ 
-        // Earth Object 
-        // ~~~~~~~
 
         function Earth(radius) {
             THREE.Object3D.call(this);
@@ -249,10 +288,6 @@
             data: data
             })
         };
-
-        // ~~~~~~~ 
-        // Three.js code 
-        // ~~~~~~~
 
         const raycaster = new THREE.Raycaster();
         const mouse = new THREE.Vector2();
@@ -392,9 +427,12 @@
     <div id='btn-menu'>
         <button on:click={toggleEarthSat}> Show Satellites </button>
         <button on:click={toggleEarth}> Earth </button>
-        <button on:click={toggleEarthPins}> View Launch Sites </button>
+        <button on:click={toggleEarthPins}> View Launch Pads </button>
         <button on:click={toggleMoon}> Moon </button>
         <button on:click={toggleGalaxy}> Solar System </button>
+        <button on:click={toggleMars}> Mars </button>
+        <button on:click={toggleJupiter}> Jupiter </button>
+        <button on:click={toggleNeptune}> Neptune </button>
         <button> Missions </button>
     </div>
 </div>
