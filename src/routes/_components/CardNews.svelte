@@ -35,6 +35,11 @@
         border: 1px solid white;
     }
 
+    
+    #div-outer-cont:hover {
+        box-shadow: 0px 0px 5px white;
+    }
+
     #div-inner-cont {
         background-color: #0c0c0c;
         color: #B9B9B9;

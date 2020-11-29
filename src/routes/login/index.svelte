@@ -44,12 +44,10 @@
 	COMPONENT HTML 
 -->
 
-<div class="auth-page">
-	<div class='innerDiv'>
-		<h1 class="text-xs-center">Sign In</h1>
-		<p class="text-xs-center">
-			<a href="/register">Need an account?</a>
-		</p>
+<div id="div-outer-cont">
+
+	<div id='div-login-cont'>
+		<h1>Sign In</h1>
 
 		<ListErrors {errors}/>
 
@@ -65,6 +63,12 @@
 			</button>
 		</form>
 	</div>
+	
+	<!-- extra actions for the user -->
+	<div id='div-auth-actions-cont'>
+		<p>	Do not have an account yet? </p>
+		<p>	<a style='color: #FA00FF !important;' href="/register"> Sign Up </a> </p>
+	</div>
 </div>
 
 <!-- 
@@ -73,19 +77,57 @@
 
 <style>
 
-	.auth-page {
+	#div-outer-cont {
 		margin: auto;
-		height: 100vh;
 		width: 50%;
-		display: flex;
+		display: grid;
+		grid-gap: 25px;
 		align-items: center;
-		justify-content: center;
+		grid-template-rows: auto auto;
 	}
 
-	.innerDiv {
-		height: 35%;
-    	display: grid;
-    	align-items: center;
+	#div-login-cont {
+		background-image: url('/assets/svg/_user/visual_design_sign_up.svg');
+		background-position: center;
+		background-repeat: no-repeat;
+		/* background-color: aliceblue; */
+		background-color: #1B1B1B;
+		background-size: cover;
+		border-radius: 10px;
+		height: 50vh;
+		display: grid;
+		align-items: center;
+		width: 100%;
+		padding: 5%;
+		text-align: center;
+	}
+
+	#div-login-cont:hover {
+		transform: scale(1.01);
+		box-shadow: 0 0 5px aliceblue;
+	}
+
+	
+	#div-login-cont h1 {
+		text-align: left;
+	}
+
+	#div-auth-actions-cont {
+		text-align: center;
+	}
+
+	#div-auth-actions-cont p {
+		font-size: 18px;
+		font-weight: bold;
+	}
+
+	fieldset {
+		outline: none;
+   		border: none;
+	}
+
+	button {
+		margin-top: 25px;
 	}
 	
 </style>

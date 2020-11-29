@@ -30,11 +30,12 @@ Component HTML
 Component SASS (CSS)
 -->
 
-<style lang='sass'>
+<style>
 
-	main
-		background:
-			color: black
-		min-height: 100vh
+	main {
+		background-color: black;
+		min-height: 100vh;
+		display: flex;
+	}
 
 </style>

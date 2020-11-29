@@ -132,7 +132,7 @@
 <section>
   <!-- news articles showcase; -->
   <div id='div-grid-showcase-cont'>
-	  <h3> In the news </h3>
+	  <h1> In the news </h1>
     {#each news_data as news}
 	  	<CardNews comp={news.tag} desc={news.news_desc} date={news.date} img={news.img_thumb} id={news.id}/>
     {/each}
