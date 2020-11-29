@@ -16,7 +16,7 @@
 
   // STORES
   import { streamVisible } from '../../stores/stream.js';
-  import { notif } from '../../stores/notification.js';
+  import { notif } from '../../stores/_state_notification.js';
 
   let showMore = false
 

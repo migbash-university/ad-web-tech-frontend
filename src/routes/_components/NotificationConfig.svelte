@@ -3,7 +3,7 @@
 	import UpcomingLaunch from './UpcomingLaunch.svelte'
 
     import { fade } from 'svelte/transition';
-    import { notif } from '../../stores/notification.js';
+    import { notif } from '../../stores/_state_notification.js';
 
     import {launch_data} from '../../stores/dummy_launch_data';
 

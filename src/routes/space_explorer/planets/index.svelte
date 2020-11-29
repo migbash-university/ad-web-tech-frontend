@@ -9,9 +9,9 @@
     import { satellite_data } from '../../../stores/_satellite_data.js'
     import { nasaDataTLE } from '../../../stores/_data_nasa_tle.js'
     import { earth_markers } from '../../../stores/_data_earth_markers.js'
+    import { planet_data } from '../../../stores/_data_planet_insight.js'
 
     // REAL DATA;
-    // TODO:
 
     export let segment;
     console.log('Space Explorer: ' + segment)
@@ -30,7 +30,7 @@
     let dayOrNight = 'AM';
     
     const monthNames = ["January", "February", "March", "April", "May", "June",
-                        "July", "August", "September", "October", "November", "December"];
+        "July", "August", "September", "October", "November", "December"];
 	
 	onMount( () => {
 		const interval = setInterval(() => {
@@ -62,6 +62,20 @@
     let earth;
     let sat_obj = [], all_obj = []
 
+    let planet_info;
+
+    /**
+     * Funtion - Assign a variable the data for the target planet data;
+     * @param planet_name
+     */
+    const loadPlanetInfo = (planet_name) => {
+        planet_data.forEach(elem => {
+            if (elem.planet == planet_name) {
+                planet_info = elem
+            }
+        })
+    }
+
     /**
      * Function - Renders the Earth alone
      */
@@ -76,6 +90,7 @@
         });
 
         all_obj.push(earth)
+        loadPlanetInfo('Earth')
     }
 
     /**
@@ -151,6 +166,17 @@
      * Function - Renders the Planet Mars alone
      */
     const toggleMars = () => {
+        clearSimulation()
+
+        const mars = viz.createSphere('earth', {
+            textureUrl: './assets/img/earth_66mya.jpg',
+            debug: {
+                showAxes: false,
+            },
+        });
+
+        all_obj.push(mars)
+        loadPlanetInfo('Mars')
     }
 
     /**
@@ -192,6 +218,8 @@
         for (n in all_obj) {
             viz.removeObject(all_obj[n])
         }
+
+        planet_info = undefined
 
         // Make sure that the other simulation is hidden:
         if (earthPinsView != false) {
@@ -243,12 +271,12 @@
     const getMarkerData = (uuid) => {
         console.log('Checking for markers data')
         marker_data.forEach(elem => {
-        console.log(elem.marker.uuid + ' ' + uuid)
-        if (elem.marker.uuid == uuid) {
-            // console.log('+++++++++++++++++++ Marker Found! ++++++++++++++++++++++')
-            showInfoFn()
-            info = elem.data
-        }
+            console.log(elem.marker.uuid + ' ' + uuid)
+            if (elem.marker.uuid == uuid) {
+                // console.log('+++++++++++++++++++ Marker Found! ++++++++++++++++++++++')
+                showInfoFn()
+                info = elem.data
+            }
         });
     }
 
@@ -414,20 +442,34 @@
 <!-- 
     Component HTML 
 -->
+
 <div id='outer-container'> 
 
     <!-- Canvas For Galaxy -->
     {#if earthPinsView == false}
-         <!-- content here -->
+        <!-- Canvas for Interactive Visualization -->
         <div in:fade out:fade id='main-container'></div>
+
+        {#if planet_info != undefined}
+            <!-- Selected Planet Info Card -->
+            <div in:fade id='div-planets-info-wrapper'>
+                <div id='div-planets-info-inner'>
+                    <h5> { planet_info.planet } </h5>
+                    <p> { planet_info.planet_desc } </p>
+                    <p> { planet_info.planet_stats.length_year } </p>
+                    <p> { planet_info.planet_stats.distance_from_sun } </p>
+                </div>
+            </div>
+        {/if}
     {/if}
     
-    <!-- Canvas for Interactive EARTH with PIN View -->
+    <!-- Canvas for Interactive EARTH with PINs View -->
     {#if earthPinsView}
         <div in:fade out:fade id='canvas_cont'>
             <!-- VISUAL GLOBE 3D - CANVAS -->
             <canvas id='rotatingGlobe'> </canvas>
-            <!-- PIN INFO -->
+
+            <!-- Launch Pad Selected Pin Info Card -->
             {#if showInfo}
                 <div in:fade out:fade id='pin-info-wrapper'>
                     <div id='pin-info-inner'>
@@ -490,6 +532,8 @@
         position: relative;
         height: 100vh;
         width: -webkit-fill-available;
+        /* Change */
+        overflow: hidden; 
     }
 
 	#main-container {
@@ -545,6 +589,22 @@
         right: 0;
         left: 0;
         text-align: center;
+    }
+
+    #div-planets-info-wrapper {
+        position: absolute;
+        left: 0;
+        top: 50%;
+        background: linear-gradient(to bottom, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.5));
+        padding: 1px;
+        border-radius: 10px;
+        width: 250px;
+    }
+
+    #div-planets-info-inner {
+        padding: 25px;
+        background-color: black;
+        border-radius: 10px;
     }
 
     #pin-info-wrapper {

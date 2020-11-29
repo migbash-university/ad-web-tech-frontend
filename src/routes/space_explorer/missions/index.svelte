@@ -16,6 +16,16 @@
 <!-- 
     Component HTML 
 -->
+<!-- Option Menu for Mission Tracking and Simple Planet/Galaxy Exploration -->
+<div id='div-opt-menu'>
+    <a rel=prefetch sapper:noscroll href='space_explorer/planets'>
+        <button> Planets </button>
+    </a>
+    <a rel=prefetch sapper:noscroll href='space_explorer/missions'>
+        <button> Missions </button>
+    </a>
+</div>
+
 {#if $missionSelect.state}
     <!-- Show the clicked mission (selected) -->
     <div in:fade id='div-mission-cont'>
@@ -36,8 +46,8 @@
 {:else}
     <!-- Missions grid layout -->
     <div in:fade id='div-mission-cont'>
-        {#each mission_data as mission}
-            <MissionCard {...mission} />
+        {#each Array(9) as _}
+            <MissionCard {...mission_data[0]} />
         {/each}
     </div>
 {/if}
@@ -47,6 +57,10 @@
 -->
 
 <style>
+
+    #div-opt-menu {
+        text-align: center;
+    }
 
     #div-mission-desc-cont {
         grid-column: 2 / 4;
@@ -66,7 +80,7 @@
         align-items: start;
         justify-content: space-evenly;
         grid-template-columns: 1fr 1fr 1fr 1fr;
-        grid-column-gap: 50px;
+        grid-gap: 50px;
         background-color: black;
         padding: 5%;
     }

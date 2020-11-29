@@ -5,7 +5,7 @@
 
     // trigger component UI/UX changes view:
     import { streamVisible } from '../../stores/stream.js';
-    import { notif } from '../../stores/notification.js';
+    import { notif } from '../../stores/_state_notification.js';
 
     export let id,
     company,
