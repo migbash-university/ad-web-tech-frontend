@@ -3,6 +3,7 @@
     
     import { fade } from 'svelte/transition';
 
+    // trigger component UI/UX changes view:
     import { streamVisible } from '../../stores/stream.js';
     import { notif } from '../../stores/notification.js';
 

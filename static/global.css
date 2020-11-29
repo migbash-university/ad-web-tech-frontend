@@ -24,6 +24,7 @@ h1, h2, h3, h4, h5, h6 {
     color: white;
     letter-spacing: 3.7px;
     margin: 0;
+    transition: all 0.5s ease;
 }
 
 /* 
@@ -44,7 +45,6 @@ button {
     border: none;
     transition: all 0.5s ease;
     cursor: pointer;
-    /* Button Style */
     align-items: center;
     border-radius: 5px;
     font-size: 16px;
@@ -66,10 +66,10 @@ input {
     padding: 10px;
 }
                 
-
 p {
     font-size: 10px;
     font-family: Ubuntu, sans-serif; 
+    color: white;
 }
 
 a {

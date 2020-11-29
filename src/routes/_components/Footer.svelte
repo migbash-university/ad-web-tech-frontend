@@ -2,8 +2,9 @@
     export let segment;
 </script>
 
-<!-- Component HTML -->
-
+<!-- 
+    Component HTML 
+-->
 <div>
 
     <!-- Footer Logo Company -->
@@ -20,8 +21,9 @@
 
 </div>
 
-<!-- Component SASS (CSS) -->
-
+<!--
+    Component SASS (CSS) 
+-->
 <style lang='sass'>
     
     @import '../../styles/main.sass'
