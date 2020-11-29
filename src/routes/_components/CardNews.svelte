@@ -6,29 +6,57 @@
     export let img;
 </script>
 
-<!-- Component HTML -->
-<a href="/news/{id}">
-    <div>
+<!-- 
+    Component HTML 
+-->
+<a rel=prefetch href="/news/{id}">
+    <div id='div-outer-cont'>
         <img src={img} alt='news_img' />
-        <h5> {comp} </h5>
-        <p> {desc} </p>
-        <p> {date} </p>
+        <div id='div-inner-cont'>
+            <span>
+                <h5> {comp} </h5>
+                <p> {date} </p>
+            </span>
+            <p> {desc} </p>
+        </div>
     </div>
 </a>
 
-<!-- Component SASS (CSS) -->
-<style lang='sass'>
+<!-- 
+    Component (CSS) 
+-->
+<style>
 
-    img
-        width: 100%
+    #div-outer-cont {
+        border-radius: 10px;
+        overflow: hidden;
+        display: grid;
+        grid-template-rows: 1fr 1fr;
+        border: 1px solid white;
+    }
 
-    p
-        font:
-            size: 10px
-        color: #666363
-        border-radius: 5px
+    #div-inner-cont {
+        background-color: #0c0c0c;
+        color: #B9B9B9;
+        padding: 10px;
+    }
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    p {
+        font-size: 10px;
+        color: #666363;
+        border-radius: 5px;
+    }
+
+    span {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
     
-    div
-        padding: 2.5px
-
 </style>

@@ -11,6 +11,8 @@
 </script>
 
 <script>
+    import EmailSubscription from '../_components/EmailSubscription.svelte'
+
     import { stores } from '@sapper/app';
     const { session } = stores();
 
@@ -59,6 +61,9 @@
         <img on:click={saveBlog} class='icon' src='./assets/svg/_news_page/fav_icon.svg' alt='fav_icon' />
     </div>
 </div>
+
+<!-- Newsletter Subscription Section -->
+<EmailSubscription />
 
 <!-- Component SASS (CSS) -->
 <style lang='sass'>

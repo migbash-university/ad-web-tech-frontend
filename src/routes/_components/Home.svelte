@@ -129,20 +129,26 @@
 <!-- 
   In the News Section 
 -->
-<section id='_section-news'>
-	<h3> In the news </h3>
-	{#each news_data as news}
-		<CardNews comp={news.tag} desc={news.news_desc} date={news.date} img={news.img_thumb} id={news.id}/>
-	{/each}
-  <a rel=prefetch href='/news'>
-    <h5 on:click={loadMore} style='color: #9B9B9B; cursor: pointer;'> Read More </h5>
-  </a>
+<section>
+  <!-- news articles showcase; -->
+  <div id='div-grid-showcase-cont'>
+	  <h3> In the news </h3>
+    {#each news_data as news}
+	  	<CardNews comp={news.tag} desc={news.news_desc} date={news.date} img={news.img_thumb} id={news.id}/>
+    {/each}
+      <!-- read more hyperlink; -->
+    <a rel=prefetch id='a-news-more' href='/news'>
+      <h5 style='color: #9B9B9B; cursor: pointer;'> Read More </h5>
+    </a>
+  </div>
 </section>
 
 <!-- Newsletter Subscription Section -->
 <EmailSubscription />
 
-<!-- PAGE MODAL BOXES POP-UPS -->
+<!-- 
+  PAGE MODAL BOXES POP-UPS 
+-->
 
 <!-- Stream Video Launch Modal Box PopUp -->
 {#if $streamVisible.stream}
@@ -201,13 +207,23 @@
   .planet_div
     @include flex-config($align-items: center, $justify-content: space-evenly)
 
-  #_section-news
+  section
+    min-height: 100vh
+    display: flex
+
+  #div-grid-showcase-cont
     display: grid
     align-items: center
-    justify-content: space-evenly
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr
-    grid-column-gap: 10px
+    justify-items: center
+    grid-template-columns: 1fr 1fr 1fr 1fr
+    grid-gap: 50px
     background-color: black
+    width: 90%
+    margin: auto
+
+  #a-news-more
+    grid-column: 4 / 4
+    justify-self: end
 
   .launch-data-cont
     position: relative
