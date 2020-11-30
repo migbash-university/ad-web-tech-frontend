@@ -65,6 +65,9 @@
 		justify-content: space-evenly
 		display: flex
 
+	.active
+		color: #FA00FF
+
 	a
 		font: 
 			family: Azonix

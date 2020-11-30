@@ -45,6 +45,9 @@
             const response = await post_non_auth('http://127.168.1.0:8080/email_notif', { email, launch_id });
             console.log(response)
         }
+
+        // BROWSER NOTIF FUTURE FEATURE
+
     }
 
 </script>
@@ -64,131 +67,166 @@
     
     <!-- select menu div -->
     <div class="select_menu">
-        <span>
-            <img class='notif-select' on:click={() => option = 'Email'} src="./assets/svg/_notif/Email_Vector.svg" alt="email-icon" />
-            <p> Email </p>
+        <!-- Email Notification -->
+        <span on:click={() => option = 'Email'} >
+            <div class='notif-select' class:active='{option === 'Email'}'>
+                <img src="./assets/svg/_notif/Email_Vector.svg" alt="email-icon" />
+            </div>
+            <h5> Email </h5>
         </span>
-        <span>
-            <img class='notif-select' on:click={() => option= 'Browser'} src="./assets/svg/_notif/Notifications_Vector.svg" alt="browser-icon" />
-            <p> Browser </p>
+        <!-- Browser Notification -->
+        <span on:click={() => option = 'Browser'} >
+            <div class='notif-select' class:active='{option === 'Browser'}'>
+                <img src="./assets/svg/_notif/Notifications_Vector.svg" alt="browser-icon" />
+            </div>
+            <h5> Browser </h5>
         </span>
-        <span>
-            <img class='notif-select' on:click={() => option = 'Mobile'} src="./assets/svg/_notif/Phone-Icon.svg" alt="mobile-icon" />
-            <p> Mobile </p>
+        <!-- Mobile Notification -->
+        <span on:click={() => option = 'Mobile'}>
+            <div class='notif-select' class:active='{option === 'Mobile'}'> 
+                <img src="./assets/svg/_notif/Phone-Icon.svg" alt="mobile-icon" />
+            </div>
+            <h5> Mobile </h5>
         </span>
     </div>
 
      <!-- notification details -->
-    <p> event Notification Details </p>
-    <UpcomingLaunch {...launch_data[launch_id]} />
-    <p> notify me 15 min Before Liftoff </p>
+    <h6 style='color: #555555; justify-self: left;'> event Notification Details </h6>
+    <!-- target launch up for notification set up -->
+    <div id='div-launch-card-cont'>
+        <UpcomingLaunch {...launch_data[launch_id]} />
+    </div>  
+    <h3 style='color: #555555'> notify me 15 min Before Liftoff </h3>
 
     <div id="cont">
         {#if inProgress == false}
             <!-- display notification config, depending on selected option -->
-            <div class='passive' class:active='{option === 'Email'}' in:fade={{ delay: 500 }} out:fade={{ duration: 300 }}>
-                <p> Email </p>
-                <input bind:value={email} placeholder='Email *' />
-            </div>
-            <div class='passive' class:active='{option === 'Browser'}' in:fade={{ delay: 500 }} out:fade={{ duration: 300 }}>
-                <p> Browser </p>
-            </div>
-            <div class='passive' class:active='{option === 'Mobile'}' in:fade={{ delay: 500 }} out:fade={{ duration: 300 }}>
-                <p> Mobile </p>
-                <input bind:value={phone_number} placeholder='Phone Number *' />
-            </div>
+            <!-- Email Option Select -->
+            {#if option === 'Email'}
+                <div in:fade={{ delay: 500 }}>
+                    <input bind:value={email} placeholder='Email *' />
+                </div>
+            <!-- Browser Option Select -->
+            {:else if option === 'Browser'}
+                <div in:fade={{ delay: 500 }}>
+                    <p> Browser </p>
+                </div>
+            <!-- Mobile Option Select -->
+            {:else if option === 'Mobile'}
+                <div in:fade={{ delay: 500 }}>
+                    <input bind:value={phone_number} placeholder='Phone Number *' />
+                </div>
+            {:else}
+                <!-- display nothing; -->
+            {/if}
+
+            <button on:click={setNotif}> Set Notification </button>
+
         {:else}
             {#if success}
                 <!-- display loading icon -->
-                <img in:fade out:fade class='momentIcon' src="./assets/svg/_notif/Success_Vector.svg" alt="success-img" />
+                <img in:fade src="./assets/svg/_notif/Success_Vector.svg" alt="success-img" />
+                <h4 style='color: #555555'> Notification Has been set </h4>
             {/if}
         {/if}
     </div>
 
-    <button on:click={setNotif}> Set Notification </button>
 
 </div>
 
 <!-- Component SASS (CSS) -->
-<style lang='sass'>
+<style>
 
-    @import '../../styles/main.sass'
+    #cont {
+        position: relative;
+        text-align: center;
+    }
 
-    #cont
-        position: relative
+    #close-btn {
+        position: absolute;
+        cursor: pointer;
+        right: 5%;
+        top: 5%;
+    }
 
-    .active
-        position: relative !important
-        display: block !important
-        opacity: 1 !important
+    #div-launch-card-cont {
+        width: 80%;
+        /* transform: scale(0.75); */
+        zoom: 0.75;
+    }
 
-    .passive
-        position: absolute
-        display: none
-        opacity: 0
-        transition: all 0.4 ease
+    .notif-select {
+        padding: 25px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        background-color: #313131;
+        transition: all 0.5s ease;
+        display: flex;
+        align-self: center;
+        justify-content: center;
+    }
 
-    .momentIcon
-        position: absolute
+    .notif-select:hover {
+        background-color: white;
+        box-shadow: 1px 1px 1px white;
+    }
 
-    #close-btn
-        position: absolute
-        right: 5%
-        top: 5%
+    .active {
+        background-color: white;
+        box-shadow: 1px 1px 1px white;
+    }
 
-    .notif-select
-        padding: 50px
-        border-radius: 10px
-        background-color: #313131
+    .modal_frame {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        margin: auto;
+        z-index: 2001;
+        box-shadow: 0 0 4px #cccccc;
+        width: fit-content;
+        height: 60vh;
+        border-radius: 10px;
+        overflow-y: hidden;
+        background-color: #1A1A1A;
+        display: grid;
+        align-items: center;
+        justify-items: center;
+        padding: 25px;
+    }
 
-        &:hover
-            background-color: white
-            transition: all 3s ease
-            box-shadow: 1px 1px 1px white
+    .select_menu {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        align-content: center;
+        grid-gap: 50px;
+        justify-items: center;
+    }
+        
+    .modal-wrapper {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 2000;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.6);
+    }
 
-    .modal_frame
-        position: fixed
-        top: 0
-        bottom: 0
-        right: 0
-        left: 0
-        margin: auto
-        z-index: 2001
-        background-color: white
-        box-shadow: 0 0 4px #cccccc
-        width: fit-content
-        height: fit-content
-        border-radius: 10px
-        overflow-y: hidden
-        background-color: #1A1A1A
+    span {
+        display: grid;
+        width: 100%;
+        text-align: center;
+        cursor: pointer;
+    }
 
-    .select_menu
-        display: grid
-        grid-template-columns: 1fr 1fr 1fr
-        align-content: center
-        grid-gap: 50px
-        justify-items: center
+    input {
+        font-family: 'Azonix';
+        color: white;
+        background-color: transparent;
+        border: 2px solid #FF7A00;
+        margin-bottom: 15px;
+    }
 
-    .modal-wrapper
-        position: fixed
-        top: 0
-        left: 0
-        z-index: 2000
-        width: 100vw
-        height: 100vh
-        background-color: rgba(0, 0, 0, 0.6)
-
-    span
-        @include flex-config($align-items: center, $justify-content: center, $flex-direction: column)
-
-        p
-            color: white
-            font:
-                family: Azonix
-                size: 14px
-
-    h3
-        color: white
-        font:
-                family: Azonix
 </style>

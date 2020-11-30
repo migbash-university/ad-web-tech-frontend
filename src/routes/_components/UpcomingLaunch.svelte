@@ -43,7 +43,7 @@
 <!-- 
     COMPONENT HTML 
 -->
-<div in:fade out:fade class='card-cont' on:click={expandInfo}>
+<div in:fade class='card-cont' on:click={expandInfo}>
 
     <div class="mission_date">
         <h3> {unixToDay(launch_time_unix)} </h3>
@@ -56,12 +56,12 @@
             <h6> {company} </h6>
             <h6> {launch_site} </h6>
         </span>
-        <p> {mission_desc} </p>
+        <p style='color: #555555;'> {mission_desc} </p>
         <span on:click={streamVisible.visible(live_stream)}>
-            <p> Stream </p>
+            <p style='color: #555555;'> Stream </p>
             <img src="./assets/svg/_launch_card/stream_feed_icon.svg" alt="stream-video-icon" />
         </span>
-        <!-- Expanded Info on Click-->
+        <!-- Expanded Info on Click FUTURE FEATURE; -->
         <!-- {#if expand}
             <div class='extra-links' in:fade out:fade>
                 <p> Social Media Stuf </p>

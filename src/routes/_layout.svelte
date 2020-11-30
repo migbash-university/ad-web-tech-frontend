@@ -35,7 +35,6 @@ Component SASS (CSS)
 	main {
 		background-color: black;
 		min-height: 100vh;
-		display: flex;
 	}
 
 </style>

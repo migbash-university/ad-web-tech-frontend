@@ -13,6 +13,8 @@
 <script>
     import EmailSubscription from '../_components/EmailSubscription.svelte'
 
+	import { post_non_auth } from 'utils.js';
+
     import { stores } from '@sapper/app';
     const { session } = stores();
 
@@ -22,8 +24,17 @@
         window.print()
     }
 
-    function saveBlog() {
-    }
+    /**
+	 * Save Function for an authenticated user,
+	 * to be able to save a news / blog into their favourites,
+     * onto their database, with the users 'uid' token,
+     *  
+	 * @param event
+	 */
+	async function saveToFavNews(event) {
+        const response = await post_non_auth('http://127.168.1.0:8080/add_to_fav_news', $session.user.uid);
+        console.log(response)
+	}
 
     function shareBlog() {
     }
@@ -63,7 +74,7 @@
         <div class='blog-actions'>
             <img on:click={printBlog} class='icon' src='./assets/svg/_news_page/print_icon.svg' alt='print_icon' />
             <img on:click={shareBlog} class='icon' src='./assets/svg/_news_page/share_icon.svg' alt='share_icon' />
-            <img on:click={saveBlog} class='icon' src='./assets/svg/_news_page/fav_icon.svg' alt='fav_icon' />
+            <img on:click={saveToFavNews} class='icon' src='./assets/svg/_news_page/fav_icon.svg' alt='fav_icon' />
         </div>
     </div>
 

@@ -11,18 +11,30 @@
 	import ListErrors from '../_components/ListErrors.svelte';
 	import { post } from 'utils.js';
 
+    import { fade } from 'svelte/transition';
+
 	const { session } = stores();
 
 	let email = '';
 	let password = '';
 	let errors = null;
 
+	/**
+	 * DEV ONLY Logger and variable use;
+	 */
 	if (process.env.NODE_ENV != 'production') {
 		console.log('=== DEV ENV ===')
 		password = 'miguel2000#'
 		email = 'miguelbacharov20@gmail.com'
 	}
 
+	/**
+	 * Login Function for autheticating the user,
+	 * and assiging the respective variables to the page in
+	 * form of 'sessions'/'cookies'.
+	 * 
+	 * @param event
+	 */
 	async function submit(event) {
 		const response = await post(`auth/login`, { email, password });
 
@@ -34,6 +46,7 @@
 			goto('/');
 		}
 	}
+
 </script>
 
 <svelte:head>
@@ -43,39 +56,46 @@
 <!-- 
 	COMPONENT HTML 
 -->
+<section>
+	<div in:fade id="div-outer-cont">
 
-<div id="div-outer-cont">
-
-	<div id='div-login-cont'>
-		<h1>Sign In</h1>
-
-		<ListErrors {errors}/>
-
-		<form on:submit|preventDefault={submit}>
-			<fieldset class="form-group">
-				<input class="form-control form-control-lg" type="email" required placeholder="Email" bind:value={email}>
-			</fieldset>
-			<fieldset class="form-group">
-				<input class="form-control form-control-lg" type="password" required placeholder="Password" bind:value={password}>
-			</fieldset>
-			<button class="btn btn-lg btn-primary pull-xs-right" type="submit">
-				Sign in
-			</button>
-		</form>
-	</div>
+		<div id='div-login-cont'>
+			<h1>Sign In</h1>
 	
-	<!-- extra actions for the user -->
-	<div id='div-auth-actions-cont'>
-		<p>	Do not have an account yet? </p>
-		<p>	<a style='color: #FA00FF !important;' href="/register"> Sign Up </a> </p>
+			<ListErrors {errors}/>
+	
+			<form on:submit|preventDefault={submit}>
+				<fieldset class="form-group">
+					<input class="form-control form-control-lg" type="email" required placeholder="Email" bind:value={email}>
+				</fieldset>
+				<fieldset class="form-group">
+					<input class="form-control form-control-lg" type="password" required placeholder="Password" bind:value={password}>
+				</fieldset>
+				<button class="btn btn-lg btn-primary pull-xs-right" type="submit">
+					Sign in
+				</button>
+			</form>
+		</div>
+		
+		<!-- extra actions for the user -->
+		<div id='div-auth-actions-cont'>
+			<p>	Do not have an account yet? </p>
+			<p>	<a style='color: #FA00FF !important;' href="/register"> Sign Up </a> </p>
+		</div>
 	</div>
-</div>
+</section>
+
 
 <!-- 
 	COMPONENT STYLE 
 -->
 
 <style>
+
+	section {
+		display: flex;
+		height: 100vh;
+	}
 
 	#div-outer-cont {
 		margin: auto;

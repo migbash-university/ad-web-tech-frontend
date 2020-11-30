@@ -76,7 +76,7 @@
   Hero Section
 -->
 <div class="grid-cont">
-	<div style="height: inherit; display: grid; grid-template-rows: auto 1fr auto;">
+	<div style="display: grid; grid-template-rows: auto 1fr auto; margin-top: 25%; height: 50vh;">
 
     <!-- Launch Header Data DIV -->
     <div class='header'>
@@ -89,7 +89,7 @@
     </div>
 
     <!-- Launch Cards Data -->
-    <div class='launch-data-cont' style='overflow-y: auto;'>
+    <div id='launch-data-cont' style='overflow-y: auto; height: auto;'>
       {#if launch_data != undefined}
         {#each launch_data.result.slice(0,3) as item}
           <UpcomingLaunch {...item}/>
@@ -225,7 +225,7 @@
     grid-column: 4 / 4
     justify-self: end
 
-  .launch-data-cont
+  #launch-data-cont
     position: relative
 
     &::-webkit-scrollbar
