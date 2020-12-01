@@ -1,5 +1,10 @@
 <script>
   const fetch = process.browser ? window.fetch : require('node-fetch').default;
+  let base = 'https://space-shadow-api.herokuapp.com';
+
+  if (process.env.NODE_ENV != 'production') {
+	  base = 'http://127.168.1.0:8080';
+  }
 
 	import { onMount } from "svelte"
 
@@ -38,7 +43,7 @@
   }
 
   (async () => {
-    const response = await fetch('http://127.168.1.0:8080/launch_data');
+    const response = await fetch(base + '/launch_data');
     launch_data = await response.json()
   })()
 

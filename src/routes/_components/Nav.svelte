@@ -35,7 +35,7 @@
 				Login
 			</a>
 			<a rel='prefetch' href="/register" class="nav-link" class:active="{$page.path === '/register'}">
-				Sign In
+				Sign Up
 			</a>
 		{/if}
 	</div>

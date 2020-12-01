@@ -1,4 +1,11 @@
 <script>
+
+    let base = 'https://space-shadow-api.herokuapp.com';
+
+    if (process.env.NODE_ENV != 'production') {
+        base = 'http://127.168.1.0:8080';
+    }
+
     import { fade, fly } from 'svelte/transition';
 
 	import { post_non_auth } from 'utils.js';
@@ -11,7 +18,7 @@
 	}
     
     async function submitEmail() {
-        const response = await post_non_auth('http://127.168.1.0:8080/news_sub', { email });
+        const response = await post_non_auth(base + '/news_sub', { email });
         if (process.env.NODE_ENV != 'production') {
             console.log(response)
 	    }
