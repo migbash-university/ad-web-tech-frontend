@@ -15,12 +15,17 @@
 
 	import { post_non_auth } from 'utils.js';
 
-    import { stores } from '@sapper/app';
+    import { stores, goto } from '@sapper/app';
     const { session } = stores();
 
     export let news
     
-    let uid = $session.user.uid
+    let uid;
+
+    if (uid != undefined) {
+        uid = $session.user.uid
+    }
+
     let news_id = news.id
 
     function printBlog() {
@@ -35,6 +40,12 @@
 	 * @param event
 	 */
 	async function saveToFavNews(event) {
+        
+        if (uid == undefined) {
+            goto('/login') 
+            return
+        }
+
         const response = await post_non_auth('http://127.168.1.0:8080/news_fav', { uid, news_id });
         console.log(response)
 	}

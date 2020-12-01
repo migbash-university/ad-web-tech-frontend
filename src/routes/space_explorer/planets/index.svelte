@@ -234,8 +234,8 @@
 
         clearSimulation()
 
-        const mars = viz.createSphere('earth', {
-            textureUrl: './assets/img/earth_66mya.jpg',
+        const mars = viz.createSphere('Mars', {
+            textureUrl: './assets/img/mars_surf.jpg',
             debug: {
                 showAxes: false,
             },
@@ -250,6 +250,18 @@
      */
     const toggleJupiter = () => {
         viz_option = 'jupiter'
+
+        clearSimulation()
+
+        const jupiter = viz.createSphere('Jupiter', {
+            textureUrl: './assets/img/jupiter_surf.jpg',
+            debug: {
+                showAxes: false,
+            },
+        });
+
+        all_obj.push(jupiter)
+        loadPlanetInfo('Jupiter')
     }
 
     /**
@@ -257,6 +269,18 @@
      */
     const toggleNeptune = () => {
         viz_option = 'neptune'
+
+        clearSimulation()
+
+        const neptune = viz.createSphere('Neptune', {
+            textureUrl: './assets/img/neptune_surf.jpg',
+            debug: {
+                showAxes: false,
+            },
+        });
+
+        all_obj.push(neptune)
+        loadPlanetInfo('Neptune')
     }
 
     /**
@@ -288,6 +312,8 @@
         for (n in all_obj) {
             viz.removeObject(all_obj[n])
         }
+
+        removeAllSatellites()
 
         planet_info = undefined
 
@@ -536,7 +562,7 @@
         {/if}
         
         <!-- satellite exploration info card -->
-        {#if sat_obj.length != 0}
+        {#if sat_obj.length != 0 && viz_option == 'earth_sat'}
             <div in:fade id='div-planets-info-wrapper'>
                 <div id='div-planets-info-inner'>
                     {#if sat_info != undefined}
@@ -666,7 +692,7 @@
     }
 
     .active {
-        color: aqua;
+        color: aqua !important;
         cursor: pointer;
         /* zoom: 1.2; */
         transform: scale(1.1);
