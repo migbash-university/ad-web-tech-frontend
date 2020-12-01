@@ -6,7 +6,7 @@
     import { fade } from 'svelte/transition';
 
     // DUMMY DATA;
-    import { satellite_data } from '../../../stores/_satellite_data.js'
+    // import { satellite_data } from '../../../stores/_data_satellite.js'
     import { nasaDataTLE } from '../../../stores/_data_nasa_tle.js'
     import { earth_markers } from '../../../stores/_data_earth_markers.js'
     import { planet_data } from '../../../stores/_data_planet_insight.js'
@@ -149,7 +149,7 @@
                 });
                 sat_obj[val] = { }
                 sat_obj[val].spaceObject = spaceship // Store data in a spearate sat_obj array;
-                sat_obj[val].data = nasaDataTLE[0].member[val].ad_data
+                sat_obj[val].data = nasaDataTLE[0].member[val]
 
                 spaceship.orbitAround(earth);
                 all_obj.push(spaceship)
@@ -205,7 +205,6 @@
         next = false
         sat_counter--
     }
-
 
     /**
      * Function - Renders the Natural Satellite of EARTH = the Moon, alone
@@ -541,7 +540,9 @@
             <div in:fade id='div-planets-info-wrapper'>
                 <div id='div-planets-info-inner'>
                     {#if sat_info != undefined}
-                        <h5> {sat_info.desc} </h5>
+                        <h5> {sat_info.name} </h5>
+                        <p> {sat_info.ad_data.desc} </p>
+                        <p> {sat_info.ad_data.launch_date} </p>
                     {/if}
                 </div>
                 <div style='display: flex; justify-content: space-between; align-items: center;'> 

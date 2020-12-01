@@ -15,8 +15,8 @@
 	
 	// import * as api from 'api.js';
 
-	export let profile;
-	export let favorites;
+	// export let profile;
+	// export let favorites;
 	export let user;
 
 	// $: isUser = user && (profile.username === user.username);
@@ -35,7 +35,7 @@
 </script>
 
 <svelte:head>
-	<title> {profile.username} • AdavaSpace </title>
+	<title> {user.username} • AdavaSpace </title>
 </svelte:head>
 
 <div>

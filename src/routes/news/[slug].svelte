@@ -19,6 +19,9 @@
     const { session } = stores();
 
     export let news
+    
+    let uid = $session.user.uid
+    let news_id = news.id
 
     function printBlog() {
         window.print()
@@ -32,7 +35,7 @@
 	 * @param event
 	 */
 	async function saveToFavNews(event) {
-        const response = await post_non_auth('http://127.168.1.0:8080/add_to_fav_news', $session.user.uid);
+        const response = await post_non_auth('http://127.168.1.0:8080/news_fav', { uid, news_id });
         console.log(response)
 	}
 
