@@ -9,7 +9,7 @@
 	 * for function trigger,
 	 */
 	function submit(event) {
-		dispatch('save', { image, username, bio, email, password });
+		dispatch('save', { username, email, password });
 	}
 </script>
 

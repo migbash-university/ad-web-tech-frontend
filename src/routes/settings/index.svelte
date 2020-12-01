@@ -46,8 +46,6 @@ COMPONENT JS
 	async function save(event) {
 		inProgress = true;
 
-		// console.log(event.detail)
-
 		const response = await post(`auth/save`, event.detail);
 
 		errors = response.errors;
