@@ -4,8 +4,10 @@
 	export async function preload({ params }, { user }) {
 		const username = params.user.slice(1);
 
-		const { profile } = await api.get(`profiles/${username}`, user && user.token);
-		return { profile, favorites: params.view === 'favorites' };
+		console.log('user-view' + params.view)
+
+		// const { profile } = await api.get(`profiles/${username}`, user && user.token);
+		// return { profile, favorites: params.view === 'favorites' };
 	}
 </script>
 
@@ -18,7 +20,7 @@
 </script>
 
 <svelte:head>
-	<title>{profile.username} • Conduit</title>
+	<title> {profile.username} • AdvaSpace </title>
 </svelte:head>
 
 <Profile {profile} {favorites} user={$session.user}/>

@@ -1,31 +1,76 @@
 <script>
+
+	// SVELTE IMPORTS
 	import { goto } from '@sapper/app';
 	import ArticleList from '../../_components/ArticleList/index.svelte';
-	import * as api from 'api.js';
+
+	// DUMMY DATA
+	import { news_data } from '../../../stores/dummy_news_data.js';
+	// import {launch_data} from '../../stores/dummy_launch_data';
+
+	// SVETLE STORES
+
+  	// COMPONENTS
+	import CardNews from '../../_components/CardNews.svelte'
+	
+	// import * as api from 'api.js';
 
 	export let profile;
 	export let favorites;
 	export let user;
 
-	$: isUser = user && (profile.username === user.username);
+	// $: isUser = user && (profile.username === user.username);
 
-	async function toggleFollowing() {
-		if (!user) return goto('/login');
+	// async function toggleFollowing() {
+	// 	if (!user) return goto('/login');
 
-		// optimistic UI
-		profile.following = !profile.following;
+	// 	// optimistic UI
+	// 	profile.following = !profile.following;
 
-		({ profile, favorites } = await (profile.following
-			? api.post(`profiles/${profile.username}/follow`, null, user && user.token)
-			: api.del(`profiles/${profile.username}/follow`, user && user.token)));
-	}
+	// 	({ profile, favorites } = await (profile.following
+	// 		? api.post(`profiles/${profile.username}/follow`, null, user && user.token)
+	// 		: api.del(`profiles/${profile.username}/follow`, user && user.token)));
+	// }
+
 </script>
 
 <svelte:head>
-	<title>{profile.username} • Conduit</title>
+	<title> {profile.username} • AdavaSpace </title>
 </svelte:head>
 
-<div class="profile-page">
+<div>
+
+	<!-- username + avatar TODO: Replace with real values-->
+	<img src="ADD_SRC_HERE" alt="user-avatar-img">
+	<h4> Miguel </h4>
+	
+
+	<!-- showcase display of favourite articles -->
+	<h2> Saved Blogs/news </h2>
+	<div id='div-grid-showcase-cont'> 
+		{#each news_data as news}
+	  		<CardNews comp={news.tag} desc={news.news_desc} date={news.date} img={news.img_thumb} id={news.id}/>
+    	{/each}
+	</div>
+
+</div>
+
+<style>
+
+	#div-grid-showcase-cont {
+		display: grid;
+		align-items: center;
+		justify-items: center;
+		grid-template-columns: 1fr 1fr 1fr 1fr;
+		grid-gap: 50px;
+		background-color: black;
+		width: 90%;
+		margin: auto;
+	}
+
+</style>
+
+<!-- <div class="profile-page">
 	<div class="user-info">
 		<div class="container">
 			<div class="row">
@@ -50,9 +95,9 @@
 				</div>
 			</div>
 		</div>
-	</div>
+	</div> -->
 
-	<div class="container">
+	<!-- <div class="container">
 		<div class="row">
 			<div class="col-xs-12 col-md-10 offset-md-1">
 				<div class="articles-toggle">
@@ -71,4 +116,4 @@
 			</div>
 		</div>
 	</div>
-</div>
+</div> -->

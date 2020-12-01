@@ -26,8 +26,8 @@
 
         // Select email notif request;
         if (option == 'Email') {
-            const response = await post_non_auth('http://127.168.1.0:8080/email_notif', { email, launch_id });
             if (process.env.NODE_ENV != 'production') {
+                const response = await post_non_auth('http://127.168.1.0:8080/email_notif', { email, launch_id });
                 console.log(response)
 	        }
             if (response.ok) {

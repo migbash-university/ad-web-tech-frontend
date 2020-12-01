@@ -1,3 +1,6 @@
+<!-- 
+LOADS BEFORE COMPONENT RENDERS - JS 
+-->
 <script context="module">
 	export async function preload({ params }, { user }) {
 		if (user) {
@@ -6,12 +9,18 @@
 	}
 </script>
 
+<!-- 
+COMPONENT JS 
+-->
 <script>
+
+	// SVELTE-JS IMPORTS 
 	import { goto, stores } from '@sapper/app';
+	import { fade } from 'svelte/transition';
+	
+	// COMPONENTS
 	import ListErrors from '../_components/ListErrors.svelte';
 	import { post } from 'utils.js';
-
-    import { fade } from 'svelte/transition';
 
 	const { session } = stores();
 
@@ -49,12 +58,15 @@
 
 </script>
 
+<!-- 
+COMPONENT HEAD 
+-->
 <svelte:head>
 	<title>Sign in • AdavaSpace</title>
 </svelte:head>
 
 <!-- 
-	COMPONENT HTML 
+COMPONENT HTML 
 -->
 <section>
 	<div in:fade id="div-outer-cont">
@@ -87,9 +99,8 @@
 
 
 <!-- 
-	COMPONENT STYLE 
+COMPONENT STYLE 
 -->
-
 <style>
 
 	section {

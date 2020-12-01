@@ -44,6 +44,7 @@
     // ~~~~~~~~~~~~~~
 
     let viz, n;
+    let viz_option;
     let earthPinsView = false;
 
     onMount(async () => {
@@ -59,10 +60,14 @@
         viz.createStars();
     }
 
-    let earth;
-    let sat_obj = [], all_obj = []
+    let earth;       // global paramater for satellite selection and targeting,
+    let sat_obj = [] // all EARTH satellite ONLY,
+    let all_obj = [] // all visualization objects,
 
     let planet_info;
+    let sat_info;
+
+    let sat_counter = 0;
 
     /**
      * Funtion - Assign a variable the data for the target planet data;
@@ -80,6 +85,9 @@
      * Function - Renders the Earth alone
      */
     const toggleEarth = () => {
+
+        viz_option = 'earth'
+
         clearSimulation()
 
         earth = viz.createSphere('earth', {
@@ -97,7 +105,11 @@
      * Function - Renders the Artificial Satellites of EARTH
      */
     const toggleEarthSat = () => {
+        
+        viz_option = 'earth_sat';
         var val;
+        sat_obj = []
+
         if (sat_obj.length == 0) {
             for (val in nasaDataTLE[0].member) {
                 
@@ -120,6 +132,11 @@
 
                 var spaceship = viz.createObject(nasaDataTLE[0].member[val].name, {
                     labelText: nasaDataTLE[0].member[val].name,
+                    // textureUrl: './assets/img/moon_surface.jpg',
+                    theme: {
+                        color: 0xFA00FF,
+                        orbitColor: 0x888888,
+                    },
                     ephem: new Spacekit.Ephem({ 
                         a: satrec.a, 
                         e: satrec.ecco, 
@@ -130,26 +147,73 @@
                         n: satrec.no,
                         epoch: satrec.jdsatepoch }, 'rad'),
                 });
-                sat_obj[val] = spaceship // Store data in a spearate sat_obj array;
-                spaceship.orbitAround(earth);
+                sat_obj[val] = { }
+                sat_obj[val].spaceObject = spaceship // Store data in a spearate sat_obj array;
+                sat_obj[val].data = nasaDataTLE[0].member[val].ad_data
 
-                // TODO: Apply Click trigger on to the sattelite for determinig the satellite;
-                // sat_obj[val].addEventListener('mouseover', function() {
-                //     alert('mouseover!')
-                // })
+                spaceship.orbitAround(earth);
+                all_obj.push(spaceship)
             }
-        } else {
-            for (n in sat_obj) {
-                viz.removeObject(sat_obj[n])
-            }
-            sat_obj = []
         }
     }
+
+    /**
+     * Function to remove ALL of the EARTH SATELLITES;
+    */
+    const removeAllSatellites = () => {
+        for (n in sat_obj) {
+            viz.removeObject(sat_obj[n].spaceObject)
+        }
+        // sat_obj = []
+    }
+    
+    // TODO:
+    const re_rednerTargetEarthSat = (target_sat, sat_counter) => {
+        // target_sat._options.theme.color = 0x00FFD1
+        var spaceship = target_sat.spaceObject
+        console.log(spaceship)
+        // viz.addObject(spaceship, false) // FIXME: ISSUE // ERROR
+        spaceship = viz.createObject(spaceship._id, 
+            spaceship._options);
+        sat_obj[sat_counter].spaceObject = spaceship
+        // spaceship.orbitAround(earth)
+    }
+
+    /**
+     * Function - Re-Renders a target Artificial Satellites with a more eye-catching look for EARTH
+     */
+    const selectEarthSat = (change) => {
+        // Assign target sat to variable
+        let target_sat = sat_obj[sat_counter]
+        // Remove all satellites,
+        removeAllSatellites()
+        // Re-render our target sat into view,
+        re_rednerTargetEarthSat(target_sat, sat_counter)
+        // Set sat info to that of our sat-obj,
+        sat_info = target_sat.data
+        // View next Earth Sat on the list
+        sat_counter += change
+        console.log('hello', sat_counter)
+    }
+
+    let next = true;
+
+    $:if (sat_counter == 0) {
+        next = true;
+        console.log('hello', sat_counter)
+    } else if (sat_counter == sat_obj.length) {
+        next = false
+        sat_counter--
+    }
+
 
     /**
      * Function - Renders the Natural Satellite of EARTH = the Moon, alone
      */
     const toggleMoon = () => {
+
+        viz_option = 'moon'
+
         clearSimulation()
 
         const moon = viz.createSphere('earth', {
@@ -166,6 +230,9 @@
      * Function - Renders the Planet Mars alone
      */
     const toggleMars = () => {
+
+        viz_option = 'mars'
+
         clearSimulation()
 
         const mars = viz.createSphere('earth', {
@@ -183,18 +250,22 @@
      * Function - Renders the Planet Jupiter alone
      */
     const toggleJupiter = () => {
+        viz_option = 'jupiter'
     }
 
     /**
      * Function - Renders the Planet Neptune alone
      */
     const toggleNeptune = () => {
+        viz_option = 'neptune'
     }
 
     /**
      * Function - Renders the Galaxy (Solar System) Visualization
      */
     const toggleGalaxy = () => {
+        viz_option = 'solar_sys'
+
         clearSimulation()
 
         const sun = viz.createObject('sun', Spacekit.SpaceObjectPresets.SUN);
@@ -296,6 +367,8 @@
      * and their interactivity,
      */
     const renderEarthWithPins = () => {
+
+        viz_option = 'launch_pads'
 
         function Marker() {
             THREE.Object3D.call(this);
@@ -450,7 +523,8 @@
         <!-- Canvas for Interactive Visualization -->
         <div in:fade out:fade id='main-container'></div>
 
-        {#if planet_info != undefined}
+        <!-- planet exploration info card -->
+        {#if planet_info != undefined && sat_obj.length == 0}
             <!-- Selected Planet Info Card -->
             <div in:fade id='div-planets-info-wrapper'>
                 <div id='div-planets-info-inner'>
@@ -458,6 +532,21 @@
                     <p> { planet_info.planet_desc } </p>
                     <p> { planet_info.planet_stats.length_year } </p>
                     <p> { planet_info.planet_stats.distance_from_sun } </p>
+                </div>
+            </div>
+        {/if}
+        
+        <!-- satellite exploration info card -->
+        {#if sat_obj.length != 0}
+            <div in:fade id='div-planets-info-wrapper'>
+                <div id='div-planets-info-inner'>
+                    {#if sat_info != undefined}
+                        <h5> {sat_info.desc} </h5>
+                    {/if}
+                </div>
+                <div style='display: flex; justify-content: space-between; align-items: center;'> 
+                    <button style='width: 100%;' disabled='{!next}' on:click={() => selectEarthSat(1)}> Next {'>'} </button>
+                    <button style='width: 100%;' disabled='{next}' on:click={() => selectEarthSat(-1)}> Prev {'<'} </button>
                 </div>
             </div>
         {/if}
@@ -498,18 +587,18 @@
 
     <!-- Galaxay Search Engine Search Options Menu -->
     <div id='div-btn-menu'>
-        <h6 on:click={toggleGalaxy}> Solar System </h6>
+        <h6 class:active='{viz_option === 'solar_sys'}' on:click={toggleGalaxy}> Solar System </h6>
 
-        <h6 on:click={toggleEarth}> Earth </h6>
-        <h6 on:click={toggleEarthSat}> Show Satellites </h6>
-        <h6 on:click={toggleEarthPins}> View Launch Pads </h6>
-        <h6 on:click={toggleMoon}> Moon </h6>
+        <h6 class:active='{viz_option === 'earth'}' on:click={toggleEarth}> Earth </h6>
+        <h6 class:active='{viz_option === 'earth_sat'}' on:click={toggleEarthSat}> Show Satellites </h6>
+        <h6 class:active='{viz_option === 'launch_pads'}' on:click={toggleEarthPins}> View Launch Pads </h6>
+        <h6 class:active='{viz_option === 'moon'}' on:click={toggleMoon}> Moon </h6>
 
-        <h6 on:click={toggleMars}> Mars </h6>
+        <h6 class:active='{viz_option === 'mars'}' on:click={toggleMars}> Mars </h6>
 
-        <h6 on:click={toggleJupiter}> Jupiter </h6>
+        <h6 class:active='{viz_option === 'jupiter'}' on:click={toggleJupiter}> Jupiter </h6>
 
-        <h6 on:click={toggleNeptune}> Neptune </h6>
+        <h6 class:active='{viz_option === 'neptune'}' on:click={toggleNeptune}> Neptune </h6>
     </div>
 
     <!-- Option Menu for Mission Tracking and Simple Planet/Galaxy Exploration -->
@@ -575,6 +664,13 @@
         color: #464646;
     }
 
+    .active {
+        color: aqua;
+        cursor: pointer;
+        /* zoom: 1.2; */
+        transform: scale(1.1);
+    }
+
     #div-btn-menu h6:hover {
         color: aqua;
         cursor: pointer;
@@ -593,8 +689,8 @@
 
     #div-planets-info-wrapper {
         position: absolute;
-        left: 0;
-        top: 50%;
+        left: 2.5%;
+        top: 40%;
         background: linear-gradient(to bottom, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.5));
         padding: 1px;
         border-radius: 10px;
