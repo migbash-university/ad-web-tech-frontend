@@ -20,14 +20,14 @@
 
 	import { post_non_auth } from 'utils.js';
 
-	export async function preload({ params }, { user }) {
-		const uid = user.uid
-		const response = await post_non_auth(base + '/get_news_fav/');
-		console.log(response)
-		// const { article } = await api.get(`articles/${params.slug}`, null);
+	// export async function preload({ params }, { user }) {
+	// 	const uid = user.uid
+	// 	const response = await post_non_auth(base + '/get_news_fav');
+	// 	console.log(response)
+	// 	// const { article } = await api.get(`articles/${params.slug}`, null);
 
-		return { response };
-	}
+	// 	// return { response };
+	// }
 
 </script>
 

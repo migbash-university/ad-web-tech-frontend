@@ -11,6 +11,17 @@
 
     // REAL DATA;
 
+    // let base = 'https://space-shadow-api.herokuapp.com/api';
+
+	// if (process.env.NODE_ENV != 'production') {
+	// 	base = 'http://127.168.1.0:8080/api';
+    // }
+    
+    // (async () => {
+    //     const response = await fetch(base + '/launch_data');
+    //     launch_data = await response.json()
+    // })()
+
 </script>
 
 <!-- 
@@ -46,8 +57,10 @@
 {:else}
     <!-- Missions grid layout -->
     <div in:fade id='div-mission-cont'>
-        {#each Array(9) as _}
-            <MissionCard {...mission_data[0]} />
+        <!-- {#each Array(9) as _} -->
+        {#each mission_data as item}
+            <!-- <MissionCard {...mission_data[0]} /> -->
+            <MissionCard {...item} />
         {/each}
     </div>
 {/if}
@@ -55,7 +68,6 @@
 <!-- 
     Component Style 
 -->
-
 <style>
 
     #div-opt-menu {
