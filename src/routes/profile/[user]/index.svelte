@@ -27,7 +27,14 @@
 		console.log(response)
 		// const { article } = await api.get(`articles/${params.slug}`, null);
 
-		return { response };
+		let favorites = []
+		news_data.forEach(elem => {
+			if (response.fav_news.includes(elem.id)) {
+				favorites.push(elem)
+			}
+		});
+
+		return { favorites };
 	}
 
 </script>
@@ -37,7 +44,7 @@
 	import Profile from './_Profile.svelte';
 
 	// export let profile;
-	// export let favorites;
+	export let favorites;
 
 	const { session } = stores();
 </script>
@@ -47,4 +54,4 @@
 </svelte:head>
 
 <!-- <Profile {profile} {favorites} user={$session.user}/> -->
-<Profile user={$session.user}/>
+<Profile {favorites} user={$session.user}/>

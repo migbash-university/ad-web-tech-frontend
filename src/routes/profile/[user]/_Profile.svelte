@@ -5,7 +5,7 @@
 	import ArticleList from '../../_components/ArticleList/index.svelte';
 
 	// DUMMY DATA
-	import { news_data } from '../../../stores/dummy_news_data.js';
+	// import { news_data } from '../../../stores/dummy_news_data.js';
 	// import {launch_data} from '../../stores/dummy_launch_data';
 
 	// SVETLE STORES
@@ -16,7 +16,7 @@
 	// import * as api from 'api.js';
 
 	// export let profile;
-	// export let favorites;
+	export let favorites;
 	export let user;
 
 	// $: isUser = user && (profile.username === user.username);
@@ -41,13 +41,13 @@
 <div>
 
 	<!-- username + avatar TODO: Replace with real values-->
-	<img src="ADD_SRC_HERE" alt="user-avatar-img">
-	<h4> Miguel </h4>
+	<!-- <img src="user.username" alt="user-avatar-img"> -->
+	<h4> {user.username} </h4>
 
 	<!-- showcase display of favourite articles -->
 	<h2> Saved Blogs/news </h2>
 	<div id='div-grid-showcase-cont'> 
-		{#each news_data as news}
+		{#each favorites as news}
 	  		<CardNews comp={news.tag} desc={news.news_desc} date={news.date} img={news.img_thumb} id={news.id}/>
     	{/each}
 	</div>
