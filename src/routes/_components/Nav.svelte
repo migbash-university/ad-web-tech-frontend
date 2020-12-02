@@ -61,9 +61,11 @@
 			border-bottom: 0.5px solid white
 
 	.nav-menu
-		width: 15%
 		justify-content: space-evenly
-		display: flex
+		display: grid
+		grid-gap: 10px
+		align-items: center
+		grid-auto-flow: column
 
 	.active
 		color: #FA00FF

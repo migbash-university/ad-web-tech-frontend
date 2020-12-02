@@ -38,15 +38,15 @@
 	<title> {user.username} • AdavaSpace </title>
 </svelte:head>
 
-<div>
+<div style='padding: 5%;'>
 
 	<!-- username + avatar TODO: Replace with real values-->
 	<!-- <img src="user.username" alt="user-avatar-img"> -->
-	<h4> {user.username} </h4>
 
 	<!-- showcase display of favourite articles -->
-	<h2> Saved Blogs/news </h2>
 	<div id='div-grid-showcase-cont'> 
+		<h4 style='grid-column: 1 / 5;'> {user.username} </h4>
+		<h2 style='grid-column: 1 / 5;'> Saved Blogs/news </h2>
 		{#each favorites as news}
 	  		<CardNews comp={news.tag} desc={news.news_desc} date={news.date} img={news.img_thumb} id={news.id}/>
     	{/each}
@@ -63,8 +63,6 @@
 		grid-template-columns: 1fr 1fr 1fr 1fr;
 		grid-gap: 50px;
 		background-color: black;
-		width: 90%;
-		margin: auto;
 	}
 
 </style>
