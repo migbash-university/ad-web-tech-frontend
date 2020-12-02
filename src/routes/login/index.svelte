@@ -109,7 +109,7 @@ COMPONENT STYLE
 
 	#div-outer-cont {
 		margin: auto;
-		width: 50%;
+		width: 600px;
 		display: grid;
 		grid-gap: 25px;
 		align-items: center;

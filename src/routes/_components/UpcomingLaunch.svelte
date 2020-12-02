@@ -58,7 +58,7 @@
         </span>
         <p style='color: #555555;'> {mission_desc} </p>
         <span on:click={streamVisible.visible(live_stream)}>
-            <p style='color: #555555;'> Stream </p>
+            <p style='color: #555555; margin-right: 10px;'> Stream </p>
             <img src="./assets/svg/_launch_card/stream_feed_icon.svg" alt="stream-video-icon" />
         </span>
         <!-- Expanded Info on Click FUTURE FEATURE; -->
@@ -98,7 +98,6 @@
             color: #8D8D8D
 
     .card-cont
-        @include flex-config($align-items: center, $justify-content: start)
         background: 
             color: white
         border-radius: 10px

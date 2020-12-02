@@ -81,7 +81,7 @@
   Hero Section
 -->
 <div class="grid-cont">
-	<div style="display: grid; grid-template-rows: auto 1fr auto; margin-top: 25%; height: 50vh;">
+	<div style="display: grid; grid-template-rows: auto 1fr auto; height: 50vh; grid-gap: 35px;">
 
     <!-- Launch Header Data DIV -->
     <div class='header'>
@@ -94,7 +94,7 @@
     </div>
 
     <!-- Launch Cards Data -->
-    <div id='launch-data-cont' style='overflow-y: auto; height: auto;'>
+    <div id='launch-data-cont'>
       {#if launch_data != undefined}
         {#each launch_data.result.slice(0,3) as item}
           <UpcomingLaunch {...item}/>
@@ -109,19 +109,25 @@
 
     <!-- LOAD MORE BTN -->
     {#if showMore}
-      <h5 on:click={loadMore} style='color: #9B9B9B; cursor: pointer;'> Show Less </h5>
+      <span>
+        <h5 on:click={loadMore} style='color: #9B9B9B; cursor: pointer;'> Show Less ▲ • </h5>
+        <p> showing {launch_data.result.length} results </p>
+      </span>
     {:else}
-      <h5 on:click={loadMore} style='color: #9B9B9B; cursor: pointer;'> Load More </h5>
+      <span>
+        <h5 on:click={loadMore} style='color: #9B9B9B; cursor: pointer;'> Load More ▼ </h5>
+        <p> showing 3 results </p>
+      </span>
     {/if}
 	</div>
 
   <!-- Second Container -->
 	<div class='planet_div'>
     <!-- Local Time Display -->
-    <div class='time'>
-      <h4> Local Time </h4>
-      <h4> {hour}:{min}:{sec} {dayOrNight} </h4>
-      <h4> {day} {month} {year} </h4>
+    <div id='div-clock-cont'>
+      <h3 style='color: #00FFD1'> Local Time </h3>
+      <h1 style='color: #828282'> {hour}:{min}:{sec} {dayOrNight} </h1>
+      <h1 style='color: #828282'> {day} {month} {year} </h1>
     </div>
     <!-- Explorer Page Redirect-->
     <a rel=prefetch sapper:noscroll href='/space_explorer'>
@@ -169,6 +175,11 @@
 <style lang='sass'>
 
   @import '../../styles/main.sass'
+
+  #div-clock-cont
+    display: grid;
+    grid-gap: 35px;
+
 
   .header
     display: flex
@@ -232,8 +243,19 @@
 
   #launch-data-cont
     position: relative
+    overflow-y: auto
+    height: -webkit-fill-available
+    display: grid
+    grid-template-rows: repeat(auto-fill, minmax(200px, 1fr))
+    grid-auto-flow: row
 
     &::-webkit-scrollbar
       display: none;
+
+  span
+    display: grid
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr))
+    align-items: center
+    justify-items: left
 
 </style>

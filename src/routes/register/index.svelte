@@ -58,7 +58,6 @@
 <!-- 
 	COMPONENT HTML 
 -->
-
 <section>
 	<div in:fade id="div-outer-cont">
 
@@ -94,7 +93,6 @@
 <!-- 
 	COMPONENT STYLE 
 -->
-
 <style>
 
 	section {
@@ -104,7 +102,7 @@
 
 	#div-outer-cont {
 		margin: auto;
-		width: 50%;
+		width: 600px;
 		display: grid;
 		grid-gap: 25px;
 		align-items: center;

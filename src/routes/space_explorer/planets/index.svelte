@@ -223,6 +223,7 @@
         });
 
         all_obj.push(moon)
+        loadPlanetInfo('Moon')
     }
 
     /**
@@ -555,10 +556,12 @@
             <!-- Selected Planet Info Card -->
             <div in:fade id='div-planets-info-wrapper'>
                 <div id='div-planets-info-inner'>
-                    <h5> { planet_info.planet } </h5>
-                    <p> { planet_info.planet_desc } </p>
+                    <h5 style='grid-column: 1 / 3;'> { planet_info.planet } </h5>
+                    <p style='grid-column: 1 / 3;'> { planet_info.planet_desc } </p>
                     <p> { planet_info.planet_stats.length_year } </p>
                     <p> { planet_info.planet_stats.distance_from_sun } </p>
+                    <p> { planet_info.planet_stats.moons } Moons </p>
+                    <p> { planet_info.planet_stats.satellites } Satellites </p>
                 </div>
             </div>
         {/if}
@@ -730,6 +733,8 @@
         padding: 25px;
         background-color: black;
         border-radius: 10px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
     }
 
     #pin-info-wrapper {

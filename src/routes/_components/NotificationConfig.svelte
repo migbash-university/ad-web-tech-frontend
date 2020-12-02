@@ -11,7 +11,8 @@
     import { fade } from 'svelte/transition';
     import { notif } from '../../stores/_state_notification.js';
 
-    import {launch_data} from '../../stores/dummy_launch_data';
+    // DUMMY DATA:
+    // import { launch_data } from '../../stores/dummy_launch_data';
 
 	import { post_non_auth } from 'utils.js';
 
@@ -21,7 +22,14 @@
 
     if (process.env.NODE_ENV != 'production') {
 		email = 'miguelbacharov20@gmail.com'
-	}
+    }
+
+    let launch_data;
+    
+    (async () => {
+        const response = await fetch(base + '/launch_data');
+        launch_data = await response.json()
+    })()
 
     let launch_id = $notif.notif_id
 
@@ -32,8 +40,8 @@
 
         // Select email notif request;
         if (option == 'Email') {
+            const response = await post_non_auth(base + '/email_notif', { email, launch_id });
             if (process.env.NODE_ENV != 'production') {
-                const response = await post_non_auth(base + '/email_notif', { email, launch_id });
                 console.log(response)
 	        }
             if (response.ok) {
@@ -82,6 +90,7 @@
                 <img src="./assets/svg/_notif/Notifications_Vector.svg" alt="browser-icon" />
             </div>
             <h5> Browser </h5>
+            <p> coming soon </p>
         </span>
         <!-- Mobile Notification -->
         <span on:click={() => option = 'Mobile'}>
@@ -89,6 +98,7 @@
                 <img src="./assets/svg/_notif/Phone-Icon.svg" alt="mobile-icon" />
             </div>
             <h5> Mobile </h5>
+            <p> coming soon </p>
         </span>
     </div>
 
@@ -96,7 +106,13 @@
     <h6 style='color: #555555; justify-self: left;'> event Notification Details </h6>
     <!-- target launch up for notification set up -->
     <div id='div-launch-card-cont'>
-        <UpcomingLaunch {...launch_data[launch_id]} />
+        {#if launch_data != undefined}
+            {#each launch_data.result as item}
+                {#if item.id === launch_id}
+                    <UpcomingLaunch {...item} />
+                {/if}
+            {/each}
+        {/if}
     </div>  
     <h3 style='color: #555555'> notify me 15 min Before Liftoff </h3>
 
@@ -187,7 +203,7 @@
         margin: auto;
         z-index: 2001;
         box-shadow: 0 0 4px #cccccc;
-        width: fit-content;
+        max-width: 60%;
         height: 60vh;
         border-radius: 10px;
         overflow-y: hidden;
