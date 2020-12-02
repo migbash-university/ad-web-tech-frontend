@@ -3,7 +3,12 @@ import * as api from 'api.js';
 export function post(req, res) {
 	const user = req.body;
 
-	api.put('update', { user }, req.session.user && req.session.user.token).then(response => {
+	console.log('SAVE SETTINGS' + ' ' + req.session.user + ' ' + req.session.user.uid)
+
+	api.post('update', { user }, req.session.user.uid).then(response => {
+
+		console.log(response)
+
 		if (response.user) {
 			req.session.user = response.user;
 		}

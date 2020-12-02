@@ -32,6 +32,12 @@
         window.print()
     }
 
+    let base = 'https://space-shadow-api.herokuapp.com/';
+
+	if (process.env.NODE_ENV != 'production') {
+		base = 'http://127.168.1.0:8080/';
+	}
+
     /**
 	 * Save Function for an authenticated user,
 	 * to be able to save a news / blog into their favourites,
@@ -46,7 +52,7 @@
             return
         }
 
-        const response = await post_non_auth('http://127.168.1.0:8080/news_fav', { uid, news_id });
+        const response = await post_non_auth(base + '/news_fav', { uid, news_id });
         console.log(response)
 	}
 
