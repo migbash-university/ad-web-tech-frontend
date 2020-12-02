@@ -144,7 +144,7 @@
   <!-- news articles showcase; -->
   <div id='div-grid-showcase-cont'>
 	  <h1> In the news </h1>
-    {#each news_data as news}
+    {#each news_data.slice(0,3) as news}
 	  	<CardNews comp={news.tag} desc={news.news_desc} date={news.date} img={news.img_thumb} id={news.id}/>
     {/each}
       <!-- read more hyperlink; -->

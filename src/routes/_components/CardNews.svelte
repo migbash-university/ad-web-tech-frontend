@@ -44,6 +44,8 @@
         background-color: #0c0c0c;
         color: #B9B9B9;
         padding: 10px;
+        overflow-y: hidden;
+        height: 210px;
     }
 
     img {

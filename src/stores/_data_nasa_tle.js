@@ -24,7 +24,7 @@ export const nasaDataTLE = [
         "line1": "1 43598U 98067PK  20237.30871042  .08160231  12416-4  62858-3 0  9999",
         "line2": "2 43598  51.6101 275.6733 0002578 315.8688  44.2132 16.39524565116065",
         "ad_data": {
-            'desc': `Satellite internet constellation being constructed by SpaceX providing satellite Internet access.`,
+            'desc': `Telecommuications Satellite`,
             'launch_date': `2019-20-21`,
         }}, {
         "@id": "https:\/\/data.ivanstanojevic.me\/api\/tle\/43638",
@@ -46,7 +46,7 @@ export const nasaDataTLE = [
         "line1": "1 43639U 98067PP  20321.79222946  .00055304  00000-0  32711-3 0  9998",
         "line2": "2 43639  51.6317 242.8647 0001367 183.2376 176.8615 15.77543387120760",
         "ad_data": {
-            'desc': `Satellite internet constellation being constructed by SpaceX providing satellite Internet access.`,
+            'desc': `Telecommuications Satellite`,
             'launch_date': `2019-20-21`,
         }}, {
         "@id": "https:\/\/data.ivanstanojevic.me\/api\/tle\/44515",
@@ -57,7 +57,7 @@ export const nasaDataTLE = [
         "line1": "1 44515U 98067QS  19240.60373123  .07900568  00000-0  66719-1 0  9995",
         "line2": "2 44515  51.6421   1.9894 0010915 340.9511 110.1949 15.64400512   137",
         "ad_data": {
-            'desc': `Satellite internet constellation being constructed by SpaceX providing satellite Internet access.`,
+            'desc': `Telecommuications Satellite`,
             'launch_date': `2019-20-21`,
         }}, {
         "@id": "https:\/\/data.ivanstanojevic.me\/api\/tle\/45257",
@@ -69,7 +69,7 @@ export const nasaDataTLE = [
         "line2": "2 45257  51.6413 307.0126 0006896 201.4604 158.6098 15.52857790 42237",
         "ad_data": {
             'desc': `Satellite internet constellation being constructed by SpaceX providing satellite Internet access.`,
-            'launch_date': `2019-20-21`,
+            'launch_date': `2012-20-24`,
         }}, {
         "@id": "https:\/\/data.ivanstanojevic.me\/api\/tle\/45259",
         "@type": "TleModel",
@@ -79,7 +79,7 @@ export const nasaDataTLE = [
         "line1": "1 45259U 98067RC  20322.50874139  .00013282  00000-0  20865-3 0  9991",
         "line2": "2 45259  51.6407 304.9188 0005880 197.9770 162.1013 15.53969509 42286",
         "ad_data": {
-            'desc': `Satellite internet constellation being constructed by SpaceX providing satellite Internet access.`,
+            'desc': `Telecommuications Satellite`,
             'launch_date': `2019-20-21`,
         }}, {
         "@id": "https:\/\/data.ivanstanojevic.me\/api\/tle\/43466",
@@ -91,7 +91,7 @@ export const nasaDataTLE = [
         "line2": "2 43466  51.6123 283.7308 0007318 301.8476 166.2040 16.39179723119460",
         "ad_data": {
             'desc': `Satellite internet constellation being constructed by SpaceX providing satellite Internet access.`,
-            'launch_date': `2019-20-21`,
+            'launch_date': `2012-20-31`,
         }}, {
         "@id": "https:\/\/data.ivanstanojevic.me\/api\/tle\/40899",
         "@type": "TleModel",
@@ -102,7 +102,7 @@ export const nasaDataTLE = [
         "line2": "2 40899  97.4717 322.9776 0013873 207.8111 268.8772 15.16856867285621",
         "ad_data": {
             'desc': `Satellite internet constellation being constructed by SpaceX providing satellite Internet access.`,
-            'launch_date': `2019-20-21`,
+            'launch_date': `2003-12-24`,
         }}, {
         "@id": "https:\/\/data.ivanstanojevic.me\/api\/tle\/40905",
         "@type": "TleModel",
@@ -123,7 +123,7 @@ export const nasaDataTLE = [
         "line1": "1 42849U 17042AA  20322.48932472  .00000392  00000-0  43234-4 0  9993",
         "line2": "2 42849  97.5007 199.7609 0009346 120.5673 239.6470 14.92567898182230",
         "ad_data": {
-            'desc': `Satellite internet constellation being constructed by SpaceX providing satellite Internet access.`,
+            'desc': `Telecommunications satellite`,
             'launch_date': `2019-20-21`,
         }}, {
         "@id": "https:\/\/data.ivanstanojevic.me\/api\/tle\/42827",
@@ -135,7 +135,7 @@ export const nasaDataTLE = [
         "line2": "2 42827  97.4989 197.1205 0016153 128.3785 231.8888 14.91428378182057",
         "ad_data": {
             'desc': `Satellite internet constellation being constructed by SpaceX providing satellite Internet access.`,
-            'launch_date': `2019-20-21`,
+            'launch_date': `2012-20-23`,
         }}, {
         "@id": "https:\/\/data.ivanstanojevic.me\/api\/tle\/42830",
         "@type": "TleModel",

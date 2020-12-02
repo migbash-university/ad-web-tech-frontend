@@ -571,9 +571,9 @@
             <div in:fade id='div-planets-info-wrapper'>
                 <div id='div-planets-info-inner'>
                     {#if sat_info != undefined}
-                        <h5> {sat_info.name} </h5>
-                        <p> {sat_info.ad_data.desc} </p>
-                        <p> {sat_info.ad_data.launch_date} </p>
+                        <h5 style='grid-column: 1 / 3;'> {sat_info.name} </h5>
+                        <p style='grid-column: 1 / 3;'> {sat_info.ad_data.desc} </p>
+                        <p style='grid-column: 1 / 3;'> Launch Date {sat_info.ad_data.launch_date} </p>
                     {/if}
                 </div>
                 <div style='display: flex; justify-content: space-between; align-items: center;'> 

@@ -51,7 +51,7 @@
         </div>
         <!-- mission data description in greater depth -->
         <div id='div-mission-desc-cont'>
-            <p> {mission_data[$missionSelect.data_pos]['mission_desc']} </p>
+            <p> {mission_data[$missionSelect.data_pos]['mission_in_depth_desc']} </p>
         </div>
     </div>
 {:else}

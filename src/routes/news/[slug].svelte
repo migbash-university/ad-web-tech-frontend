@@ -22,7 +22,7 @@
     
     let uid;
 
-    if ($session.user.uid != undefined) {
+    if ($session.user != undefined) {
         uid = $session.user.uid
     }
 
