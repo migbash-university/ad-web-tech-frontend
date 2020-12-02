@@ -43,7 +43,6 @@
 	<!-- username + avatar TODO: Replace with real values-->
 	<img src="ADD_SRC_HERE" alt="user-avatar-img">
 	<h4> Miguel </h4>
-	
 
 	<!-- showcase display of favourite articles -->
 	<h2> Saved Blogs/news </h2>

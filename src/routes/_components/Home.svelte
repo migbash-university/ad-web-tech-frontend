@@ -43,7 +43,7 @@
   }
 
   (async () => {
-    const response = await fetch('http://127.168.1.0:8080/launch_data');
+    const response = await fetch(base + '/launch_data');
     launch_data = await response.json()
   })()
 
