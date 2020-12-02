@@ -1,6 +1,12 @@
 <script>
 
-	import UpcomingLaunch from './UpcomingLaunch.svelte'
+    let base = 'https://space-shadow-api.herokuapp.com';
+
+    if (process.env.NODE_ENV != 'production') {
+        base = 'http://127.168.1.0:8080';
+    }
+
+    import UpcomingLaunch from './UpcomingLaunch.svelte'
 
     import { fade } from 'svelte/transition';
     import { notif } from '../../stores/_state_notification.js';
@@ -27,7 +33,7 @@
         // Select email notif request;
         if (option == 'Email') {
             if (process.env.NODE_ENV != 'production') {
-                const response = await post_non_auth('http://127.168.1.0:8080/email_notif', { email, launch_id });
+                const response = await post_non_auth(base + '/email_notif', { email, launch_id });
                 console.log(response)
 	        }
             if (response.ok) {
@@ -40,13 +46,9 @@
             }
         }
 
-        // Select phone notif request;
-        if (option == 'Mobile') {
-            const response = await post_non_auth('http://127.168.1.0:8080/email_notif', { email, launch_id });
-            console.log(response)
-        }
+        // BROWSER NOTIF [FUTURE FEATURE]
 
-        // BROWSER NOTIF FUTURE FEATURE
+        // MOBILE NOTIF [FUTURE FEATURE]
 
     }
 

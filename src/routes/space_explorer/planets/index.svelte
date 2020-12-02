@@ -315,6 +315,8 @@
 
         removeAllSatellites()
 
+        sat_obj = []
+
         planet_info = undefined
 
         // Make sure that the other simulation is hidden:
