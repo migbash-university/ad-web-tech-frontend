@@ -32,10 +32,10 @@
         window.print()
     }
 
-    let base = 'https://space-shadow-api.herokuapp.com/';
+    let base = 'https://space-shadow-api.herokuapp.com/api';
 
 	if (process.env.NODE_ENV != 'production') {
-		base = 'http://127.168.1.0:8080/';
+		base = 'http://127.168.1.0:8080/api';
 	}
 
     /**
@@ -52,7 +52,7 @@
             return
         }
 
-        const response = await post_non_auth(base + '/news_fav', { uid, news_id });
+        const response = await post_non_auth(base + '/set_news_fav', { uid, news_id });
         console.log(response)
 	}
 
